@@ -1,0 +1,236 @@
+/* ========== 1. VARIABLES ========== */
+/* Colors live here so you can change the theme in one place */
+:root {
+  --maroon: #7b1113;
+  --maroon-dark: #5a0c0e;
+  --maroon-light: #f7eaea;
+  --text: #2b2b2b;
+  --muted: #6b6b6b;
+  --border: #d9d9d9;
+  --bg: #f3f4f6;
+  --surface: #ffffff;      /* card and input background */
+  --on-maroon: #f1e9e6;    /* soft white for text on maroon buttons */
+}
+
+
+/* ========== 2. BASE ========== */
+* {
+  box-sizing: border-box;
+}
+
+/* Page: centers the card and footer, and sets the faded background image */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 24px 16px;
+  color: var(--text);
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.5;
+  background:
+    linear-gradient(rgba(243, 244, 246, 0.7), rgba(243, 244, 246, 0.7)),
+    url("../img/UP-Min-Admin.png") center / cover no-repeat fixed;
+}
+
+/* Links: maroon, no underline in any state */
+a {
+  color: var(--maroon);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--maroon-dark);
+  text-decoration: none;
+}
+
+
+/* ========== 3. MAIN: the login card ========== */
+main {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  background: var(--surface);
+  border-top: 6px solid var(--maroon);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ========== 4. HEADER: logo, title, subtitle ========== */
+main > header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.logo {
+  display: block;
+  width: 96px;
+  height: auto;
+  margin: 0 auto 12px;
+}
+
+main > header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  letter-spacing: 6px;
+  color: var(--maroon);
+}
+
+main > header h2 {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+}
+
+main > header p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* University name: small uppercase line under the title */
+.university {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Short maroon line separating branding from the portal title */
+.divider {
+  width: 60px;
+  height: 3px;
+  margin: 16px auto;
+  border: none;
+  border-radius: 2px;
+  background: var(--maroon);
+}
+
+
+/* ========== 5. FORM: fields and options ========== */
+main > form p {
+  margin: 0 0 16px;
+}
+
+main > form label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Text and password inputs */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: var(--maroon);
+  box-shadow: 0 0 0 3px rgba(123, 17, 19, 0.15);
+}
+
+/* Options row: "Remember me" left, "Forgot password?" right.
+   This targets the 3rd <p> in the form. If you add or remove
+   fields above it, update the number or give the row a class. */
+main > form p:nth-of-type(3) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+main > form p:nth-of-type(3) label {
+  font-weight: 400;
+}
+
+
+/* ========== 6. BUTTONS: shared style for all buttons ========== */
+button {
+  width: 100%;
+  padding: 11px;
+  background: var(--maroon);
+  color: var(--on-maroon);
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+/* Hover: darker, lifted, with a soft shadow */
+button:hover {
+  background: var(--maroon-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(123, 17, 19, 0.35);
+}
+
+/* Pressed: drops back down */
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(123, 17, 19, 0.3);
+}
+
+/* Keyboard focus ring */
+button:focus-visible {
+  outline: 3px solid rgba(123, 17, 19, 0.35);
+  outline-offset: 2px;
+}
+
+
+/* ========== 7. DEMO ACCOUNT BOX ========== */
+main > section {
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--maroon-light);
+  border-left: 4px solid var(--maroon);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+main > section h3 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  color: var(--maroon);
+}
+
+main > section p {
+  margin: 2px 0;
+}
+
+/* Secondary button: outlined, so "Sign in" stays the main action */
+main > section button {
+  margin-top: 12px;
+  background: var(--surface);
+  color: var(--maroon);
+  border: 1px solid var(--maroon);
+}
+
+main > section button:hover {
+  background: var(--maroon);
+  color: var(--on-maroon);
+}
+
+
+/* ========== 8. FOOTER ========== */
+body > footer {
+  max-width: 400px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+body > footer p {
+  margin: 4px 0;
+}

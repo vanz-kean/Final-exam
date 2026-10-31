@@ -1,55 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAPLAG KAPLAG</title>
+    <title>KAPLAG | UP Mindanao</title>
     <link rel="icon" href="img/Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="Css/Login.css">
 </head>
+
 <body>
-    <main>
+
+  <!-- ========== MAIN: the login card ========== -->
+  <main>
+
+    <!-- Header: logo, system name, and page title -->
     <header>
-      <h1>UP</h1>
-      <p>University of the Philippines Mindanao</p>
-      <h2>Student Portal</h2>
-      <p>Computerized Student Directory System</p>
+      <img src="img/Logo.png" alt="UP Mindanao logo" class="logo">
+      <h1>KAPLAG</h1>
+      <p class="university">University of the Philippines Mindanao</p>
+      <hr class="divider" aria-hidden="true">
+      <h2 id="signin-title">Student Portal</h2>
+      <p>Sign in to access the student directory</p>
     </header>
- 
-    <form>
+
+    <!-- Form: student number, password, options, and sign in button -->
+    <form action="Dashboard.html" aria-labelledby="signin-title">
+
       <p>
         <label for="student-number">Student number</label><br>
-        <input id="student-number" type="text" placeholder="e.g. 2022-04821">
+        <input id="student-number" name="student-number" type="text"
+               placeholder="e.g. 2026-17196" autocomplete="username" required>
       </p>
- 
+
       <p>
         <label for="password">Password</label><br>
-        <input id="password" type="password" placeholder="Enter your password">
+        <input id="password" name="password" type="password"
+               placeholder="Enter password" autocomplete="current-password" required>
       </p>
- 
+
+      <!-- Options row (3rd <p>, targeted by nth-of-type(3) in the CSS) -->
       <p>
-        <label><input type="checkbox"> Remember me</label>
+        <label><input type="checkbox" name="remember"> Remember me</label>
         <a href="#">Forgot password?</a>
       </p>
- 
+
       <button type="submit">Sign in</button>
     </form>
- 
-    <section>
-      <h3>Demo account</h3>
-      <p>Student number: 202</p>
+
+    <!-- Demo account box -->
+    <section aria-labelledby="demo-title">
+      <h3 id="demo-title">Demo account</h3>
+      <p>Student no : 2026-17196</p>
       <p>Password: UPMin@2026</p>
-      <button type="button">Use this account</button>
+      <button type="button">Autofill</button>
     </section>
+
   </main>
- 
+
+  <!-- ========== FOOTER: privacy link, copyright, motto ========== -->
   <footer>
-    <p><a href="#">UP Privacy Notice</a> · RA 10173</p>
-    <p>© 2026 University of the Philippines Mindanao, Barangay Mintal, Tugbok District, Davao City</p>
+    <p><a href="#">Privacy Notice</a> · Data Privacy Act (RA 10173)</p>
+    <p>© 2026 UP Mindanao · Mintal, Davao City</p>
     <p>“Transforming lifelong learners into responsive leaders”</p>
   </footer>
-  
+
   <!-- V4NZ K3$N S$Z()N was here -->
 
-    
 </body>
 </html>
