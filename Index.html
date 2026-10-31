@@ -7,5 +7,157 @@
     <link rel="icon" href="img/Logo.png" type="image/x-icon">
 </head>
 <body>
+    <!-- Top bar -->
+  <header>
+    <strong>UP Mindanao · Student Portal</strong>
+    <button type="button">Notifications</button>
+    <button type="button">Maria Cristina (2022-04821)</button>
+  </header>
+ 
+  <!-- Sidebar -->
+  <nav aria-label="Main navigation">
+    <ul>
+      <li><a href="#" aria-current="page">Dashboard</a></li>
+      <li><a href="#">Class Schedule</a></li>
+      <li><a href="#">Grades</a></li>
+      <li><a href="#">Fees</a></li>
+      <li><a href="#">Prospectus</a></li>
+      <li><a href="#">Announcements</a></li>
+      <li><a href="#">UP Mail</a></li>
+      <li>
+        <details>
+          <summary>More</summary>
+          <ul>
+            <li><a href="#">Evaluations</a></li>
+            <li><a href="#">Campus Facility &amp; Safety</a></li>
+            <li><a href="#">College Facility &amp; Safety</a></li>
+            <li><a href="#">Student Housing</a></li>
+          </ul>
+        </details>
+      </li>
+    </ul>
+    <p><a href="#">Log out</a></p>
+  </nav>
+ 
+  <main>
+ 
+    <!-- 1. Greeting -->
+    <section aria-labelledby="greeting">
+      <h1 id="greeting">Good morning, Maria</h1>
+      <p>BS Computer Science · Year 3 · 1st Semester AY 2026–2027</p>
+    </section>
+ 
+    <!-- 2. Today's classes (main focus) -->
+    <section aria-labelledby="classes">
+      <h2 id="classes">Today’s classes</h2>
+ 
+      <!-- Day tabs: dot = has classes -->
+      <div role="tablist" aria-label="Day of the week">
+        <button type="button" role="tab" aria-selected="true">Mon</button>
+        <button type="button" role="tab" aria-selected="false">Tue •</button>
+        <button type="button" role="tab" aria-selected="false">Wed •</button>
+        <button type="button" role="tab" aria-selected="false">Thu •</button>
+        <button type="button" role="tab" aria-selected="false">Fri •</button>
+      </div>
+ 
+      <p><strong>Up next:</strong> MATH 55 · 10:00–11:00 · ACAD 201</p>
+ 
+      <ul>
+        <li>
+          <strong>MATH 55</strong> · Elementary Analysis I<br>
+          10:00–11:00 · ACAD 201 · Lecture
+        </li>
+        <li>
+          <strong>GE 3</strong> · Mathematics in the Modern World<br>
+          13:00–14:00 · ACAD 101 · Lecture
+        </li>
+        <li>
+          <strong>CS 151</strong> · Software Engineering I<br>
+          14:30–16:00 · ACAD 303 · Lecture
+        </li>
+      </ul>
+ 
+      <p><a href="#">View full schedule</a></p>
+    </section>
+ 
+    <!-- 3. Needs attention (balance + deadlines, most urgent first) -->
+    <section aria-labelledby="attention">
+      <h2 id="attention">Needs your attention</h2>
+ 
+      <ul>
+        <li>
+          <strong>Tuition fee payment</strong> · Balance ₱1,060.00<br>
+          Due 2026-09-15 · 10 days left
+          <a href="#">View fees</a>
+        </li>
+        <li>
+          <strong>INC grade completion deadline</strong><br>
+          2026-09-30 · 25 days left
+        </li>
+        <li>
+          <strong>LOA application deadline</strong><br>
+          2026-10-05 · 30 days left
+        </li>
+        <li>
+          <strong>2nd semester pre-enrollment</strong><br>
+          2026-10-15 · 40 days left
+        </li>
+      </ul>
+    </section>
+ 
+    <!-- 4. Announcements -->
+    <section aria-labelledby="announcements">
+      <h2 id="announcements">Announcements (5)</h2>
+ 
+      <article>
+        <p>Enrollment · <time datetime="2026-09-01">2026-09-01</time></p>
+        <h3>Enrollment Period for 2nd Semester AY 2026–2027</h3>
+        <p>Online enrollment will begin on October 15, 2026.</p>
+        <p>Office of the University Registrar</p>
+      </article>
+ 
+      <article>
+        <p>Academic · <time datetime="2026-08-28">2026-08-28</time></p>
+        <h3>Submission of Incomplete (INC) Grade Requirements</h3>
+        <p>Students with INC grades from 2nd Semester AY 2025–2026 are reminded to complete them.</p>
+        <p>Office of the University Registrar</p>
+      </article>
+ 
+      <article>
+        <p>Academic · <time datetime="2026-08-25">2026-08-25</time></p>
+        <h3>Student Evaluation of Teachers (SET) Now Open</h3>
+        <p>The online SET for 1st Semester AY 2026–2027 is now open for all students.</p>
+        <p>Office of the Vice Chancellor for Academic Affairs</p>
+      </article>
+ 
+      <p><a href="#">View all announcements</a></p>
+    </section>
+ 
+    <!-- 5. Quick summary -->
+    <section aria-labelledby="summary">
+      <h2 id="summary">At a glance</h2>
+ 
+      <dl>
+        <dt>Current GWA</dt>
+        <dd>1.85</dd>
+ 
+        <dt>Units enrolled</dt>
+        <dd>18</dd>
+ 
+        <dt>Degree progress</dt>
+        <dd>
+          <progress value="87" max="144">60%</progress>
+          87 of 144 units
+        </dd>
+      </dl>
+    </section>
+ 
+  </main>
+ 
+  <footer>
+    <p><a href="#">UP Privacy Notice</a> · RA 10173</p>
+    <p>© 2026 University of the Philippines Mindanao</p>
+  </footer>
+ 
 </body>
 </html>
