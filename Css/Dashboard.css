@@ -1,0 +1,658 @@
+/* ========== 1. VARIABLES ========== */
+/* Same palette as the login page, so both pages stay in sync */
+:root {
+  --maroon: #7b1113;
+  --maroon-dark: #5a0c0e;
+  --maroon-light: #f7eaea;
+  --text: #2b2b2b;
+  --muted: #6b6b6b;
+  --border: #d9d9d9;
+  --bg: #f3f4f6;
+  --surface: #ffffff;      /* card background */
+  --on-maroon: #f1e9e6;    /* soft white for text on maroon */
+}
+
+
+/* ========== 2. BASE + PAGE LAYOUT ========== */
+* {
+  box-sizing: border-box;
+}
+
+/* The page is a grid: top bar across the top,
+   sidebar on the left, main content and footer on the right.
+   The first column is "auto" so it follows the sidebar's width. */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "top  top"
+    "nav  main"
+    "nav  foot";
+  color: var(--text);
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.5;
+  background:
+    linear-gradient(rgba(243, 244, 246, 0.7), rgba(243, 244, 246, 0.7)),
+    url("../img/UP-Min-Admin.png") center / cover no-repeat fixed;
+}
+
+/* Links: maroon, no underline in any state */
+a {
+  color: var(--maroon);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--maroon-dark);
+  text-decoration: none;
+}
+
+/* Keyboard focus ring for all buttons */
+button:focus-visible {
+  outline: 3px solid rgba(123, 17, 19, 0.35);
+  outline-offset: 2px;
+}
+
+/* The real checkbox is hidden but still works with the keyboard */
+.nav-toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+/* ========== 3. TOP BAR (page header) ========== */
+body > header {
+  grid-area: top;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 24px;
+  background: linear-gradient(90deg, var(--maroon-dark), var(--maroon));
+  color: var(--on-maroon);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Hamburger button: three bars (a label that ticks the hidden checkbox) */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  background: transparent;
+  border: 1px solid rgba(241, 233, 230, 0.35);
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.menu-toggle span {
+  display: block;
+  height: 2px;
+  background: var(--on-maroon);
+  border-radius: 2px;
+}
+
+/* Focus ring on the hamburger when the checkbox is focused with Tab */
+.nav-toggle:focus-visible ~ header .menu-toggle {
+  outline: 3px solid rgba(241, 233, 230, 0.6);
+  outline-offset: 2px;
+}
+
+/* Brand: logo (in a white circle so it stands out) and portal name */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--on-maroon);
+}
+
+.brand:hover {
+  color: var(--on-maroon);
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  padding: 3px;
+  object-fit: contain;
+  background: var(--surface);
+  border-radius: 50%;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brand-text strong {
+  font-size: 1.15rem;
+  letter-spacing: 3px;
+}
+
+.brand-text small {
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* Right side: pushed to the far end by the auto margin */
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Round notification button with an unread dot */
+.icon-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  color: var(--on-maroon);
+  border: 1px solid rgba(241, 233, 230, 0.35);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.notif-dot {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  width: 10px;
+  height: 10px;
+  background: var(--on-maroon);
+  border: 2px solid var(--maroon);
+  border-radius: 50%;
+}
+
+/* Profile pill: avatar, name, and student number */
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 16px 5px 5px;
+  background: rgba(0, 0, 0, 0.18);
+  color: var(--on-maroon);
+  border: 1px solid rgba(241, 233, 230, 0.35);
+  border-radius: 999px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-btn:hover {
+  background: var(--maroon-dark);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: var(--on-maroon);
+  color: var(--maroon);
+  border-radius: 50%;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.profile-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.profile-id {
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+
+/* ========== 4. SIDEBAR (navigation) ========== */
+/* Fixed width so it can animate open and closed */
+body > nav {
+  grid-area: nav;
+  align-self: start;
+  position: sticky;
+  top: 88px;                      /* stays below the top bar while scrolling */
+  width: 226px;
+  min-width: 0;
+  margin: 24px 0 24px 24px;
+  padding: 16px 12px;
+  overflow: hidden;
+  background: var(--surface);
+  border-top: 6px solid var(--maroon);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: width 0.25s ease, margin 0.25s ease, padding 0.25s ease,
+              opacity 0.2s ease, visibility 0.25s;
+}
+
+/* When the checkbox is ticked, the sidebar collapses to nothing
+   and the content area expands to fill the space */
+.nav-toggle:checked ~ nav {
+  width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+body > nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Each menu link */
+body > nav a {
+  display: block;
+  padding: 9px 12px;
+  color: var(--text);
+  border-left: 4px solid transparent;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+body > nav a:hover {
+  background: var(--maroon-light);
+  color: var(--maroon);
+}
+
+/* Current page: tinted background with a maroon accent bar */
+body > nav a[aria-current="page"] {
+  background: var(--maroon-light);
+  border-left-color: var(--maroon);
+  color: var(--maroon);
+  font-weight: 600;
+}
+
+/* "More" dropdown */
+body > nav summary {
+  padding: 9px 12px;
+  border-left: 4px solid transparent;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+body > nav summary:hover {
+  background: var(--maroon-light);
+  color: var(--maroon);
+}
+
+body > nav details ul {
+  padding-left: 12px;
+}
+
+/* Log out link: separated from the menu by a thin line */
+body > nav > p {
+  margin: 12px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+body > nav > p a {
+  color: var(--maroon);
+  font-weight: 600;
+}
+
+
+/* ========== 5. MAIN: card grid ========== */
+/* Two columns on wide screens; sections choose how many they span */
+body > main {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-content: start;
+  padding: 24px;
+}
+
+/* Every section is a card, like the login card */
+main > section {
+  padding: 24px;
+  background: var(--surface);
+  border-top: 4px solid var(--maroon);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Card headings */
+main > section h2 {
+  margin: 0 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.15rem;
+  color: var(--maroon);
+}
+
+/* Link line at the bottom of a card ("View full schedule", etc.) */
+main > section > p:last-child {
+  margin: 16px 0 0;
+  font-size: 0.9rem;
+}
+
+main > section > p:last-child a {
+  font-weight: 600;
+}
+
+/* Shared list style (today's classes, needs attention) */
+main section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+main section li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+
+main section li:first-child {
+  padding-top: 0;
+}
+
+main section li:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+/* Which sections take the full width */
+main > section[aria-labelledby="greeting"],
+main > section[aria-labelledby="announcements"],
+main > section[aria-labelledby="summary"] {
+  grid-column: 1 / -1;
+}
+
+
+/* ========== 6. TODAY'S CLASSES ========== */
+/* Day tabs (Mon to Fri) */
+[role="tablist"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+[role="tab"] {
+  padding: 8px 16px;
+  background: var(--surface);
+  color: var(--maroon);
+  border: 1px solid var(--maroon);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+[role="tab"]:hover {
+  background: var(--maroon-light);
+}
+
+/* Selected day: filled maroon */
+[role="tab"][aria-selected="true"],
+[role="tab"][aria-selected="true"]:hover {
+  background: var(--maroon);
+  color: var(--on-maroon);
+}
+
+/* "Up next" highlight box (same look as the demo box on the login page) */
+[role="tablist"] + p {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  background: var(--maroon-light);
+  border-left: 4px solid var(--maroon);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+
+/* ========== 7. NEEDS YOUR ATTENTION ========== */
+/* The first item is the most urgent, so its title is maroon */
+main > section[aria-labelledby="attention"] li:first-child strong {
+  color: var(--maroon);
+}
+
+/* Inline action link (e.g. "View fees") */
+main > section[aria-labelledby="attention"] li a {
+  display: inline-block;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+
+/* ========== 8. ANNOUNCEMENTS ========== */
+/* Each announcement is a small card with a maroon accent bar */
+main article {
+  margin-bottom: 12px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--maroon);
+  border-radius: 4px;
+}
+
+/* Order inside each article: category and date, title, text, office */
+main article p {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+}
+
+main article h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+/* Category and date line */
+main article p:first-child {
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Office name */
+main article p:last-child {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+
+/* ========== 9. AT A GLANCE ========== */
+/* Label on the left, value on the right */
+main dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 12px 24px;
+  align-items: center;
+  margin: 0;
+}
+
+main dt {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+main dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Degree progress bar */
+progress {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: 10px;
+  margin-bottom: 6px;
+  border: none;
+  border-radius: 5px;
+  background: var(--border);
+  color: var(--maroon);
+}
+
+progress::-webkit-progress-bar {
+  background: var(--border);
+  border-radius: 5px;
+}
+
+progress::-webkit-progress-value {
+  background: var(--maroon);
+  border-radius: 5px;
+}
+
+progress::-moz-progress-bar {
+  background: var(--maroon);
+  border-radius: 5px;
+}
+
+
+/* ========== 10. GREETING (placed late so it overrides the shared card rules) ========== */
+/* Tinted card with a left accent bar, like the login demo box */
+main > section[aria-labelledby="greeting"] {
+  background: var(--maroon-light);
+  border-top: none;
+  border-left: 4px solid var(--maroon);
+}
+
+main > section[aria-labelledby="greeting"] h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--maroon);
+}
+
+main > section[aria-labelledby="greeting"] p {
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+
+/* ========== 11. FOOTER ========== */
+body > footer {
+  grid-area: foot;
+  padding: 8px 24px 24px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+body > footer p {
+  margin: 4px 0;
+}
+
+
+/* ========== 12. RESPONSIVE ========== */
+/* Tablets: cards stack into one column */
+@media (max-width: 1000px) {
+  body > main {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Phones: sidebar sits above the content.
+   It starts hidden, and ticking the checkbox SHOWS it
+   (the opposite of desktop, where ticking hides it). */
+@media (max-width: 800px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "top"
+      "nav"
+      "main"
+      "foot";
+  }
+
+  body > header {
+    padding: 10px 16px;
+  }
+
+  body > nav {
+    display: none;
+    position: static;
+    width: auto;
+    margin: 16px 16px 0;
+  }
+
+  .nav-toggle:checked ~ nav {
+    display: block;
+    width: auto;
+    margin: 16px 16px 0;
+    padding: 16px 12px;
+    border-top: 6px solid var(--maroon);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  body > nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  body > main {
+    padding: 16px;
+  }
+}
+
+/* Small phones: hide the extra text in the top bar */
+@media (max-width: 600px) {
+  .brand-text small,
+  .profile-info {
+    display: none;
+  }
+
+  .profile-btn {
+    padding: 5px;
+  }
+}

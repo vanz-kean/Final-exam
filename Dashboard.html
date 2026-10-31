@@ -1,58 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAPLAG UP</title>
+    <title>KAPLAG | Dashboard</title>
     <link rel="icon" href="img/Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="Css/Dashboard.css">
 </head>
+
 <body>
-    <!-- Top bar -->
+
+  <!-- Hidden checkbox that controls the sidebar (CSS only, no JavaScript).
+       It must stay before the header and nav so the CSS can reach them. -->
+  <input type="checkbox" id="nav-toggle" class="nav-toggle"
+         aria-label="Toggle navigation menu" aria-controls="sidebar">
+
+  <!-- ========== TOP BAR: menu toggle, logo, notifications, profile ========== -->
   <header>
-    <strong>UP Mindanao · Student Portal</strong>
-    <button type="button">Notifications</button>
-    <button type="button">Vanz Kean (2026-17196)</button>
+
+    <!-- Hamburger: clicking this label ticks the hidden checkbox above -->
+    <label for="nav-toggle" class="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <!-- Brand: logo and portal name, links back to the dashboard -->
+    <a href="Dashboard.html" class="brand">
+      <img src="img/Logo.png" alt="UP Mindanao logo" class="brand-logo">
+      <span class="brand-text">
+        <strong>KAPLAG</strong>
+        <small>UP Mindanao · Student Portal</small>
+      </span>
+    </a>
+
+    <!-- Right side: notifications and student profile -->
+    <div class="header-actions">
+
+      <button type="button" class="icon-btn" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.7 21a2 2 0 0 1-3.4 0"/>
+        </svg>
+        <span class="notif-dot"></span>
+      </button>
+
+      <button type="button" class="profile-btn">
+        <span class="avatar" aria-hidden="true">VK</span>
+        <span class="profile-info">
+          <span class="profile-name">Vanz Kean</span>
+          <span class="profile-id">2026-17196</span>
+        </span>
+      </button>
+
+    </div>
   </header>
- 
-  <!-- Sidebar -->
-  <nav aria-label="Main navigation">
+
+  <!-- ========== SIDEBAR: main navigation ========== -->
+  <nav id="sidebar" aria-label="Main navigation">
     <ul>
-      <li><a href="#Dashboard.html" aria-current="page">Dashboard</a></li>
-      <li><a href="#Class Schedule.html">Class Schedule</a></li>
-      <li><a href="#Grades.html">Grades</a></li>
-      <li><a href="#Fees.html">Fees</a></li>
-      <li><a href="#Prospectus.html">Prospectus</a></li>
-      <li><a href="#Announcements.html">Announcements</a></li>
-      <li><a href="#UPMail.html">UP Mail</a></li>
-      <li><a href="#StudentInformation.html">Student Information</a></li>
+      <li><a href="Dashboard.html" aria-current="page">Dashboard</a></li>
+      <li><a href="ClassSchedule.html">Class Schedule</a></li>
+      <li><a href="Grades.html">Grades</a></li>
+      <li><a href="Fees.html">Fees</a></li>
+      <li><a href="Prospectus.html">Prospectus</a></li>
+      <li><a href="Announcements.html">Announcements</a></li>
+      <li><a href="UPMail.html">UP Mail</a></li>
+      <li><a href="StudentInformation.html">Student Information</a></li>
+
+      <!-- Dropdown for less-used pages -->
+      <li>
         <details>
           <summary>More</summary>
           <ul>
-            <li><a href="#Evaluations.html">Evaluations</a></li>
-            <li><a href="#CampusFacility.html">Campus Facility &amp; Safety</a></li>
-            <li><a href="#CollegeFacility.html">College Facility &amp; Safety</a></li>
-            <li><a href="#StudentHousing.html">Student Housing</a></li>
-            <li><a href="#UPMail.html">UP Mail</a></li>
+            <li><a href="Evaluations.html">Evaluations</a></li>
+            <li><a href="CampusFacility.html">Campus Facility &amp; Safety</a></li>
+            <li><a href="CollegeFacility.html">College Facility &amp; Safety</a></li>
+            <li><a href="StudentHousing.html">Student Housing</a></li>
           </ul>
         </details>
       </li>
     </ul>
-    <p><a href="#Login.html">Log out</a></p>
+
+    <!-- Change Login.html to your login page's file name -->
+    <p><a href="Login.html">Log out</a></p>
   </nav>
- 
+
+  <!-- ========== MAIN: dashboard cards ========== -->
   <main>
- 
-    <!-- 1. Greeting -->
+
+    <!-- Greeting: student name, program, and term -->
     <section aria-labelledby="greeting">
       <h1 id="greeting">Good morning, Vanz Kean</h1>
       <p>BS Computer Science · Year 1 · 2nd Semester AY 2026–2027</p>
     </section>
- 
-    <!-- 2. Today's classes (main focus) -->
+
+    <!-- Today's classes: day tabs, next class, and the day's schedule -->
     <section aria-labelledby="classes">
       <h2 id="classes">Today’s classes</h2>
- 
-      <!-- Day tabs: dot = has classes -->
+
+      <!-- Day tabs (a dot means the day has classes) -->
       <div role="tablist" aria-label="Day of the week">
         <button type="button" role="tab" aria-selected="true">Mon</button>
         <button type="button" role="tab" aria-selected="false">Tue •</button>
@@ -60,9 +109,9 @@
         <button type="button" role="tab" aria-selected="false">Thu •</button>
         <button type="button" role="tab" aria-selected="false">Fri •</button>
       </div>
- 
+
       <p><strong>Up next:</strong> MATH 55 · 10:00–11:00 · ACAD 201</p>
- 
+
       <ul>
         <li>
           <strong>MATH 55</strong> · Elementary Analysis I<br>
@@ -77,19 +126,19 @@
           14:30–16:00 · ACAD 303 · Lecture
         </li>
       </ul>
- 
-      <p><a href="#">View full schedule</a></p>
+
+      <p><a href="ClassSchedule.html">View full schedule</a></p>
     </section>
- 
-    <!-- 3. Needs attention (balance + deadlines, most urgent first) -->
+
+    <!-- Needs attention: balance and deadlines, most urgent first -->
     <section aria-labelledby="attention">
       <h2 id="attention">Needs your attention</h2>
- 
+
       <ul>
         <li>
           <strong>Tuition fee payment</strong> · Balance ₱1,060.00<br>
-          Due 2026-09-15 · 10 days left
-          <a href="#">View fees</a>
+          Due 2026-09-15 · 10 days left<br>
+          <a href="Fees.html">View fees</a>
         </li>
         <li>
           <strong>INC grade completion deadline</strong><br>
@@ -105,46 +154,46 @@
         </li>
       </ul>
     </section>
- 
-    <!-- 4. Announcements -->
+
+    <!-- Announcements: latest posts, each one an independent article -->
     <section aria-labelledby="announcements">
       <h2 id="announcements">Announcements (5)</h2>
- 
+
       <article>
         <p>Enrollment · <time datetime="2026-09-01">2026-09-01</time></p>
         <h3>Enrollment Period for 2nd Semester AY 2026–2027</h3>
         <p>Online enrollment will begin on October 15, 2026.</p>
         <p>Office of the University Registrar</p>
       </article>
- 
+
       <article>
         <p>Academic · <time datetime="2026-08-28">2026-08-28</time></p>
         <h3>Submission of Incomplete (INC) Grade Requirements</h3>
         <p>Students with INC grades from 2nd Semester AY 2025–2026 are reminded to complete them.</p>
         <p>Office of the University Registrar</p>
       </article>
- 
+
       <article>
         <p>Academic · <time datetime="2026-08-25">2026-08-25</time></p>
         <h3>Student Evaluation of Teachers (SET) Now Open</h3>
         <p>The online SET for 1st Semester AY 2026–2027 is now open for all students.</p>
         <p>Office of the Vice Chancellor for Academic Affairs</p>
       </article>
- 
-      <p><a href="#">View all announcements</a></p>
+
+      <p><a href="Announcements.html">View all announcements</a></p>
     </section>
- 
-    <!-- 5. Quick summary -->
+
+    <!-- At a glance: GWA, units, and degree progress -->
     <section aria-labelledby="summary">
       <h2 id="summary">At a glance</h2>
- 
+
       <dl>
         <dt>Current GWA</dt>
         <dd>1.85</dd>
- 
+
         <dt>Units enrolled</dt>
         <dd>18</dd>
- 
+
         <dt>Degree progress</dt>
         <dd>
           <progress value="87" max="144">60%</progress>
@@ -152,13 +201,14 @@
         </dd>
       </dl>
     </section>
- 
+
   </main>
- 
+
+  <!-- ========== FOOTER: privacy link and copyright ========== -->
   <footer>
-    <p><a href="#">UP Privacy Notice</a> · RA 10173</p>
+    <p><a href="#">Privacy Notice</a> · Data Privacy Act (RA 10173)</p>
     <p>© 2026 University of the Philippines Mindanao</p>
   </footer>
- 
+
 </body>
 </html>
