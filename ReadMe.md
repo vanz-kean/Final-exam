@@ -1,168 +1,243 @@
-# KAPLAG Student Dashboard
+# KAPLAG Student Portal
 
-The dashboard page of the UP Mindanao Student Portal. It is built with plain HTML and CSS only (no JavaScript) and shares its maroon color palette and card-based design with the login page.
+KAPLAG (Computerized Student Directory System) is the UP Mindanao Student Portal: a simple, student-centered portal for class schedules, grades, fees, the prospectus and announcements. It is designed mobile first and should feel as easy to use as a modern mobile banking app.
+
+The full list of rules and decisions lives in [`requirements.txt`](requirements.txt). This README explains how the project is organized and how to run it.
+
+## Status
+
+| Part | State |
+|------|-------|
+| Login, Dashboard, Privacy, Prospectus | Finished as plain HTML (reference design and content) |
+| React + Bootstrap version | Planned: convert the four pages above into components |
+| ClassSchedule, Grades, Fees, Announcements, UPMail, StudentInformation, Evaluations, CampusFacility, CollegeFacility, StudentHousing | Not built yet (show a "Coming soon" screen) |
+
+## Tech stack
+
+- **React** (function components and hooks only)
+- **Bootstrap 5**, installed from npm and themed with an Apple-style palette
+- **React Router** for one route per page
+- **Vite** for the dev server and build
+- Optional: **react-bootstrap** for ready-made accessible components
+
+No other packages (no Redux, CSS-in-JS, UI kits or analytics) without asking first.
+
+## Getting started
+
+You need [Node.js](https://nodejs.org/) (LTS) and npm.
+
+```bash
+# first time only: create the project, then add the packages
+npm create vite@latest kaplag -- --template react
+cd kaplag
+npm install react-router-dom bootstrap
+npm install react-bootstrap        # optional
+
+# every time
+npm install
+npm run dev        # live preview in the browser
+npm run build      # production build in dist/
+```
+
+Load Bootstrap's CSS in `src/main.jsx` (`import "bootstrap/dist/css/bootstrap.min.css"`), not from a CDN, so the site works offline and stays version-locked.
 
 ## Project structure
 
 ```
-project/
-├── Login.html
-├── Dashboard.html
-├── Css/
-│   ├── Login.css
-│   └── Dashboard.css
-└── img/
-    ├── Logo.png
-    └── UP-Min-Admin.png
+kaplag/
+├── index.html               Single HTML shell (includes a <noscript> message)
+├── package.json
+├── vite.config.js
+├── public/
+│   └── img/
+│       ├── Logo.png         Tab icon and header logo
+│       └── UP-Min-Admin.png Optional background image
+└── src/
+    ├── main.jsx             Imports Bootstrap and theme.css, renders <App />
+    ├── App.jsx              Routes (one per page)
+    ├── styles/
+    │   └── theme.css        Apple-style Bootstrap overrides, dark mode, tab bar
+    ├── components/
+    │   ├── Layout.jsx       Header + sidebar + tab bar + footer + page outlet
+    │   ├── Header.jsx
+    │   ├── Sidebar.jsx
+    │   ├── TabBar.jsx
+    │   ├── Footer.jsx
+    │   └── ...              Shared pieces (PageTitle, EmptyState, SkeletonCard,
+    │                        ConfirmModal, StatusBadge)
+    ├── pages/
+    │   ├── Login.jsx
+    │   ├── Dashboard.jsx
+    │   ├── Prospectus.jsx
+    │   ├── Privacy.jsx
+    │   └── ...              The ten pages still to build
+    └── data/
+        ├── student.js       Name, student number, program, curriculum
+        ├── prospectus.js    Terms and courses (swap per student)
+        └── sample.js        Schedule, fees, grades, announcements
 ```
 
-**Path rule:** paths written in HTML are relative to the HTML file (`img/Logo.png`). Paths written in CSS are relative to the CSS file, so the background image in `Css/Dashboard.css` uses `../img/UP-Min-Admin.png`.
+**Naming rule:** one component per file, PascalCase names (`Dashboard.jsx`, `TabBar.jsx`). Folder names are case-sensitive on some servers, so keep them exactly as shown.
 
-## Getting started
+**Data rule:** student data lives in `src/data`, never inside page components. A different student only needs new data, not new components.
 
-1. Keep the folder structure above.
-2. Open `Dashboard.html` in a browser.
-3. Link pages (`ClassSchedule.html`, `Grades.html`, and so on) will show a 404 until those files exist.
-4. The "Log out" link points to `Login.html`. Change it if your login page uses a different file name.
+## Routes
 
----
+| Route | Page |
+|-------|------|
+| `/login` | Login (default route redirects here) |
+| `/dashboard` | Dashboard |
+| `/class-schedule` | Class Schedule |
+| `/grades` | Grades |
+| `/fees` | Fees |
+| `/prospectus` | Prospectus |
+| `/announcements` | Announcements |
+| `/up-mail` | UP Mail |
+| `/student-information` | Student Information |
+| `/privacy` | UP Privacy Notice |
+| `/evaluations` | Evaluations |
+| `/campus-facility` | Campus Facility & Safety |
+| `/college-facility` | College Facility & Safety |
+| `/student-housing` | Student Housing |
 
-## HTML structure
+Unknown routes show a friendly "Page not found" with a link home. Logged-out visitors are sent to `/login`.
 
-The page uses semantic elements, so each block says what it is. The order matters because the sidebar toggle depends on it.
+## Shared layout
 
-| Order | Element | Purpose |
-|-------|---------|---------|
-| 1 | `<input type="checkbox" id="nav-toggle">` | Hidden checkbox that stores whether the sidebar is open or closed |
-| 2 | `<header>` | Top bar: hamburger, logo and name, notifications, student profile |
-| 3 | `<nav id="sidebar">` | Sidebar navigation with a "More" dropdown and a log out link |
-| 4 | `<main>` | Dashboard cards (five `<section>` elements) |
-| 5 | `<footer>` | Privacy notice and copyright |
+`Layout.jsx` wraps every page except Login, in this order:
 
-### Top bar (`<header>`)
+| Order | Part | Purpose |
+|-------|------|---------|
+| 1 | Skip link | "Skip to main content", the first focusable element |
+| 2 | Header | Menu button, logo and name, notifications, student profile |
+| 3 | Sidebar | Main navigation, a "More" group, and Log out |
+| 4 | `<main id="main">` | The page content, with one `<h1>` |
+| 5 | Tab bar | Quick navigation on phones only |
+| 6 | Footer | Privacy Notice link, Data Privacy Act (RA 10173) and copyright |
 
-- **Hamburger** (`<label for="nav-toggle" class="menu-toggle">`): clicking it ticks the hidden checkbox.
-- **Brand** (`.brand`): logo (`.brand-logo`) and portal name (`.brand-text`), linking to the dashboard.
-- **Right side** (`.header-actions`): notification button (`.icon-btn` with an inline SVG bell and `.notif-dot`) and the profile pill (`.profile-btn` with `.avatar`, `.profile-name` and `.profile-id`).
+- **Header:** brand (logo, **KAPLAG**, "UP Mindanao · Student Portal"), bell button with a notification dot, and a profile button (avatar "VK", "Vanz Kean", "2026-17196").
+- **Sidebar:** Dashboard, Class Schedule, Grades, Fees, Prospectus, Announcements, UP Mail, Student Information, then **More** (Evaluations, Campus Facility & Safety, College Facility & Safety, Student Housing, UP Privacy Notice), then Log out.
+- **Current page:** `NavLink` adds `aria-current="page"` automatically. Only one link per nav has it.
+- **Menu:** opens and closes with React state or a Bootstrap offcanvas. The old hidden-checkbox method is retired in the React version.
 
-### Sidebar (`<nav>`)
-
-- A `<ul>` of links. The current page has `aria-current="page"`, which the CSS uses for the highlighted style.
-- Less-used pages sit in a `<details>` / `<summary>` dropdown, which works without JavaScript.
-- The log out link is a separate `<p>` at the bottom.
-
-### Main content (`<main>`)
-
-Each card is a `<section>` labelled by its heading through `aria-labelledby`. The CSS also uses these labels to place the cards.
-
-| Section (`aria-labelledby`) | Content |
-|-----------------------------|---------|
-| `greeting` | Welcome message, program, and term |
-| `classes` | Day tabs, "Up next" box, and the list of today's classes |
-| `attention` | Balance and deadlines, most urgent first |
-| `announcements` | Latest posts as `<article>` elements, each with a `<time>` tag |
-| `summary` | GWA, units, and degree progress (`<dl>` and `<progress>`) |
-
-### Accessibility notes
-
-- Headings follow a logical order (`h1` greeting, `h2` card titles, `h3` announcement titles).
-- The checkbox has an `aria-label`, and the notification button has an `aria-label` because it shows only an icon.
-- The day tabs use `role="tablist"`, `role="tab"` and `aria-selected`.
-- Decorative items (the bell SVG and avatar initials) are hidden from screen readers with `aria-hidden="true"`.
-
----
-
-## CSS structure (`Css/Dashboard.css`)
-
-The file is divided into numbered sections that follow the page from top to bottom.
-
-| # | Section | What it styles |
-|---|---------|----------------|
-| 1 | Variables | Color palette in `:root` |
-| 2 | Base and page layout | Grid layout, background, links, hidden checkbox |
-| 3 | Top bar | Header, hamburger, brand, notification button, profile pill |
-| 4 | Sidebar | Navigation card, links, current page, dropdown, collapse behavior |
-| 5 | Main | Card grid and shared card, heading, and list styles |
-| 6 | Today's classes | Day tabs and "Up next" box |
-| 7 | Needs your attention | Urgent item emphasis and action links |
-| 8 | Announcements | Article cards |
-| 9 | At a glance | Label and value layout, progress bar |
-| 10 | Greeting | Tinted greeting card (placed late so it overrides the shared card style) |
-| 11 | Footer | Footer text |
-| 12 | Responsive | Tablet and phone layouts |
-
-### Color variables
-
-| Variable | Value | Used for |
-|----------|-------|----------|
-| `--maroon` | `#7b1113` | Main brand color, borders, headings |
-| `--maroon-dark` | `#5a0c0e` | Hover states, top bar gradient |
-| `--maroon-light` | `#f7eaea` | Tinted backgrounds (current page, greeting, "Up next") |
-| `--text` | `#2b2b2b` | Body text |
-| `--muted` | `#6b6b6b` | Secondary text |
-| `--border` | `#d9d9d9` | Dividers and outlines |
-| `--bg` | `#f3f4f6` | Background overlay color |
-| `--surface` | `#ffffff` | Card and input background |
-| `--on-maroon` | `#f1e9e6` | Soft white text on maroon |
-
-Change a color once in `:root` and it updates everywhere. These are the same values as the login page, so both pages stay in sync.
-
-### Page layout
-
-`body` is a CSS grid with named areas:
-
-```
-"top  top"
-"nav  main"
-"nav  foot"
-```
-
-The first column is `auto`, so it follows the sidebar's width. The `<main>` area is its own two-column grid of cards. The greeting, announcements, and summary cards span both columns, and the classes and attention cards sit side by side.
-
-### Sidebar toggle (CSS only)
-
-1. The hidden checkbox (`#nav-toggle`) comes first in `<body>`.
-2. The hamburger is a `<label for="nav-toggle">`, so clicking it ticks or unticks the checkbox.
-3. The selector `.nav-toggle:checked ~ nav` matches the `nav` that follows a ticked checkbox.
-4. On desktop, the checked state collapses the sidebar (width, margin, and padding go to 0), and the content expands to fill the space.
-5. On phones the logic is reversed: the sidebar starts hidden, and the checked state shows it.
-
-**Important:** the checkbox must stay before `<header>` and `<nav>` in the HTML. The `~` selector only reaches elements that come after it.
-
-### Responsive breakpoints
+### Navigation by screen size
 
 | Width | Behavior |
 |-------|----------|
-| 1000px and below | Cards stack into one column |
-| 800px and below | Sidebar moves above the content and is hidden until toggled; links wrap in rows |
-| 600px and below | Top bar hides the subtitle and the student's name, keeping the avatar |
+| Under 768px (phone) | Fixed bottom tab bar: Home, Schedule, Grades, Fees, More. "More" opens the sidebar. Compact header. |
+| 768px and up | Sidebar visible, tab bar hidden, content centered with a comfortable maximum width |
 
-### Selector conventions
+Focus moves to the page `<h1>` after each route change.
 
-- Page-level blocks are scoped with child selectors (`body > header`, `body > nav`, `main > section`) so styles do not leak into other parts of the page.
-- Cards are targeted by their `aria-labelledby` value (for example `main > section[aria-labelledby="attention"]`) instead of by position.
+## Pages
 
----
+| Page | What it shows | Bootstrap pieces |
+|------|---------------|------------------|
+| Login | Student number, password, show/hide password, remember me, forgot password, sign in, demo account, privacy link | Form validation, Alert |
+| Dashboard | Greeting, today's classes with day tabs and "Up next", needs your attention (most urgent first), announcements, completion of degree | Nav tabs, Badge, Card, ProgressBar |
+| Class Schedule | Day view with tabs; current and next class highlighted | Nav tabs |
+| Grades | GWA on top, latest term first, INC and failing grades flagged | Table, Badge |
+| Fees | Amount due and due date at the top, breakdown, payment steps | Table |
+| Prospectus | Student details and one table per term, with filter, search and live unit totals | Accordion, Table (responsive) |
+| Privacy | UP Privacy Notice for Students: summary, collapsible sections, DPO contacts, read-and-understood checkbox | Accordion, Toast |
+| Announcements | Newest first, filter by category, unread marked | Card, Badge |
+
+Logging out asks for confirmation in a modal, then returns to `/login`.
+
+### Dashboard sections
+
+| Section | Content |
+|---------|---------|
+| Greeting | Welcome message, program and term |
+| Today's classes | Day tabs (today selected on load), "Up next" box, list of classes |
+| Needs your attention | Balance and deadlines, most urgent first, urgent items in red |
+| Announcements | Latest posts, each with a date |
+| Completion of degree | GWA, units enrolled and degree progress |
+
+## Design
+
+KAPLAG uses an Apple-style look on top of Bootstrap. Override Bootstrap's CSS variables in `src/styles/theme.css` instead of shipping its default look.
+
+| Token | Light | Dark | Used for |
+|-------|-------|------|----------|
+| Background | `#f5f5f7` | `#000000` | Page background |
+| Card | `#ffffff` | `#1c1c1e` | Cards and surfaces |
+| Text | `#1d1d1f` | | Body text |
+| Muted | `#6e6e73` | | Secondary text |
+| Accent (`--bs-primary`) | `#0071e3` | `#0a84ff` | Primary button, links, focus ring |
+| Red | | | Urgent items only |
+
+- **Dark mode:** automatic, set through `data-bs-theme` from `prefers-color-scheme`.
+- **Fonts:** system stack only (`-apple-system`, SF Pro, Inter, Segoe UI, Roboto, Arial, sans-serif). Nothing to download.
+- **Shape:** 12px input corners, 20–24px cards, soft shadows, a blue focus ring and one solid blue primary button per screen.
+- **Motion:** short transitions (150–250 ms), reduced when the device asks for it.
+- **Color rule:** color must mean something, so use it only where action is needed.
+
+The earlier maroon palette and the faded background image on every page are retired.
+
+## UX principles
+
+Inspired by how mobile banking apps work:
+
+- **Mobile first.** Tap targets are at least 44 × 44 px, and wide tables scroll inside their own container.
+- **Main answer first.** Each page opens with what the student came for, with one primary action per screen.
+- **Few choices, short paths.** At most five quick destinations, and common tasks take three taps or fewer.
+- **Plain, friendly words.** "You owe ₱1,060.00", not "Outstanding balance". Errors say how to fix the problem.
+- **Always show the state.** Skeleton loading, clear success messages, friendly empty states and inline errors. Never lose what the student typed, and confirm risky actions.
+- **Comfort.** 16px minimum text, WCAG AA contrast, dark mode and reduced motion respected. Formats stay consistent (₱1,060.00, 2026-09-15, 18 units).
+
+## Accessibility
+
+- Landmarks (`header`, `nav`, `main`, `footer`) and one `<h1>` per page, with a logical heading order.
+- A visible focus ring, labels on every input and `aria-live` for messages that appear after an action.
+- Icon-only buttons (such as the bell) have an `aria-label`. Decorative SVGs and avatar initials are `aria-hidden`.
+- Color is never the only signal.
+
+## Behavior
+
+- **Login:** checks the demo account (`2022-04821` / `UPMin@2026`) in the browser only. No real passwords are stored or sent.
+- **Session:** the logged-in demo student is kept in React state (and `sessionStorage` if needed).
+- **Dashboard:** day tabs, "Up next" countdown, days-left math and a time-of-day greeting.
+- **Prospectus:** expand or collapse terms, filter "Not yet taken", search by course code, and unit totals calculated from the data.
+- **Privacy:** expand or collapse all sections, read-and-understood behavior and copy buttons.
+
+Not allowed unless asked: server calls, real authentication, real student data in the code and tracking.
 
 ## Common customizations
 
 | To change | Edit |
 |-----------|------|
-| Brand colors | Variables in `:root` |
-| Sidebar width | `width: 226px` in `body > nav` (the grid column is that width plus the 24px left margin) |
-| Background fade | The `0.7` values in the `body` gradient (higher is fainter, lower shows more of the image) |
-| Which cards are full width | The grid-column rule listing `greeting`, `announcements`, and `summary` in section 5 |
-| Card top border thickness | `border-top: 4px solid` in `main > section` (the login card uses 6px) |
-| Logo background | `.brand-logo` (remove the background, padding, and radius to show the logo directly on maroon) |
+| Student name, number, program, curriculum | `src/data/student.js` |
+| Courses and terms in the prospectus | `src/data/prospectus.js` |
+| Schedule, fees, grades, announcements | `src/data/sample.js` |
+| Brand colors and Bootstrap look | Variables in `src/styles/theme.css` |
+| Sidebar links | `src/components/Sidebar.jsx` |
+| Tab bar items | `src/components/TabBar.jsx` |
+| A page's route | `src/App.jsx` |
 
----
+## Reference HTML pages
 
-## Known limitations and next steps
+The finished plain-HTML pages are the design and content source for the React components:
 
-- The **day tabs** only look interactive. Switching days needs JavaScript.
-- The **notification dot** is always visible, and the notification and profile buttons do nothing yet.
-- The **sidebar state** resets on every page load.
-- All **data** (name, schedule, balance, announcements) is written directly in the HTML. A future version could load it from a database or API.
-- **Link targets** other than `Dashboard.html` and `Login.html` still need to be created.
-- The `Announcements (5)` heading says five, but three announcements are shown. Update either the count or the list.
-- A **"Privacy Notice"** link currently points to `#`.
+```
+Login.html   Dashboard.html   Privacy.html   Prospectus.html
+```
+
+Paths in those files are relative to the HTML file (`img/Logo.png`). They use a hidden checkbox for the menu and no JavaScript.
+
+## Known issues
+
+- The Prospectus HTML totals 159 units, while the Dashboard shows 144 total units. Confirm the correct program total.
+- The Dashboard footer privacy link points to `#`.
+- The Dashboard "UP Privacy Notice" link has a stray `aria-current="page"`.
+- The Dashboard heading says "Announcements (5)" but shows three announcements. Update the count or the list.
+- The Dashboard greeting says Year 1 · 2nd Semester. Check that it fits the student.
+- The four finished pages are plain HTML and still need converting to React.
+
+## Still to decide
+
+- Which page to convert or build first
+- Sample data or real data
+- What the site is for (school requirement, portfolio or practice)
+- Where it will be hosted or submitted
+- Whether to use react-bootstrap or plain Bootstrap classes

@@ -1,0 +1,223 @@
+# =============================================================================
+# KAPLAG Student Portal - Security-First .gitignore
+# =============================================================================
+# This file protects sensitive data, credentials, and build artifacts.
+# Commit this file to the repository. Do NOT commit files matching these patterns.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# ENVIRONMENT & CREDENTIALS (CRITICAL - Never commit these)
+# -----------------------------------------------------------------------------
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+*.env
+*.env.*
+
+# Secrets and keys
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+*.jks
+*.keystore
+secrets.*
+credentials.*
+config/secrets.*
+*.secret
+
+# API keys and tokens (pattern-based)
+*api*key*
+*access*token*
+*secret*key*
+*private*key*
+*auth*token*
+
+# -----------------------------------------------------------------------------
+# NODE.JS / VITE / REACT BUILD ARTIFACTS
+# -----------------------------------------------------------------------------
+node_modules/
+dist/
+build/
+*.local
+.vite/
+.cache/
+.parcel-cache/
+.esbuild/
+*.tsbuildinfo
+
+# Vite specific
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Package manager
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -----------------------------------------------------------------------------
+# IDE & EDITOR FILES
+# -----------------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+*.vs/
+.vscode/settings.json
+
+# -----------------------------------------------------------------------------
+# OS GENERATED FILES
+# -----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Windows specific
+*.lnk
+*.url
+
+# -----------------------------------------------------------------------------
+# TEST & COVERAGE ARTIFACTS
+# -----------------------------------------------------------------------------
+coverage/
+.nyc_output/
+*.lcov
+*.coverage
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+.test-results/
+playwright-report/
+test-results/
+
+# -----------------------------------------------------------------------------
+# LOGS & TEMP FILES
+# -----------------------------------------------------------------------------
+*.log
+logs/
+*.tmp
+*.temp
+tmp/
+temp/
+*.bak
+*.backup
+
+# -----------------------------------------------------------------------------
+# DATABASE & LOCAL DATA (CRITICAL - Never commit real data)
+# -----------------------------------------------------------------------------
+*.sqlite
+*.sqlite3
+*.db
+*.mdb
+*.accdb
+data/*.json
+data/*.csv
+data/*.sql
+src/data/*.json
+src/data/*.js
+src/data/*.ts
+!src/data/sample-*.json
+!src/data/*.example.json
+!src/data/*.template.json
+
+# -----------------------------------------------------------------------------
+# UPLOADS & USER GENERATED CONTENT
+# -----------------------------------------------------------------------------
+uploads/
+public/uploads/
+assets/uploads/
+files/
+*.upload
+
+# -----------------------------------------------------------------------------
+# SSL / CERTIFICATES
+# -----------------------------------------------------------------------------
+ssl/
+certs/
+*.pem
+*.crt
+*.key
+
+# -----------------------------------------------------------------------------
+# DOCKER & CONTAINER
+# -----------------------------------------------------------------------------
+.docker/
+docker-compose.override.yml
+docker-compose.local.yml
+*.dockerfile.local
+
+# -----------------------------------------------------------------------------
+# CI/CD & DEPLOYMENT
+# -----------------------------------------------------------------------------
+.vercel
+.netlify
+.firebase/
+*.deployment
+deployment/
+
+# -----------------------------------------------------------------------------
+# PROJECT SPECIFIC - KAPLAG
+# -----------------------------------------------------------------------------
+# Demo credentials (specs.md says: "No real passwords are stored or sent")
+# The demo account in Login.html is for prototype only
+# If you add real authentication later, ensure credentials are in .env only
+
+# Image assets that shouldn't be in git (large files, user uploads)
+# Keep Logo.png and UP-Min-Admin.png - they're part of the design
+Img/*.exe
+Img/*.dmg
+Img/*.app
+Img/*.msi
+Img/*.deb
+Img/*.rpm
+Img/*.pkg
+Img/*.dmg
+
+# Specs and documentation drafts (keep final versions)
+specs/drafts/
+discovery/drafts/
+implementation/drafts/
+
+# -----------------------------------------------------------------------------
+# SECURITY SCANNING & AUDIT OUTPUTS
+# -----------------------------------------------------------------------------
+security-audit/
+*.sarif
+*.osv
+trivy-report.*
+snyk-report.*
+dependabot-report.*
+
+# -----------------------------------------------------------------------------
+# MISCELLANEOUS
+# -----------------------------------------------------------------------------
+*.pid
+*.seed
+*.pid.lock
+*.map
+!**/sourcemaps/*.map
+
+# End of .gitignore
