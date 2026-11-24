@@ -1,58 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KAPLAG | UP Mindanao</title>
-  <link rel="icon" href="img/Logo.png" type="image/x-icon">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAPLAG | UP Mindanao</title>
+    <link rel="icon" href="img/Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../Css/Login.css">
 </head>
-<body class="page-login">
-  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation menu" aria-controls="sidebar">
 
-  <main class="login-page" role="main">
-    <section class="login-card" aria-labelledby="signin-title">
-      <header class="login-header">
-        <img src="img/Logo.png" alt="UP Mindanao logo" class="login-logo">
-        <h1>KAPLAG</h1>
-        <p class="university">University of the Philippines Mindanao</p>
-        <hr class="login-divider" aria-hidden="true">
-        <h2 id="signin-title">Student Portal</h2>
-        <p>Sign in to access the student directory</p>
-      </header>
+<body>
 
-      <form class="login-form" action="dashboard.html" aria-labelledby="signin-title">
-        <div class="form-group">
-          <label for="student-number">Student number</label>
-          <input id="student-number" name="student-number" type="text" placeholder="e.g. 2026-17196" autocomplete="username" required>
-        </div>
+  <!-- ========== MAIN: the login card ========== -->
+  <main>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input id="password" name="password" type="password" placeholder="Enter password" autocomplete="current-password" required>
-        </div>
+    <!-- Header: logo, system name, and page title -->
+    <header>
+      <img src="img/Logo.png" alt="UP Mindanao logo" class="logo">
+      <h1>KAPLAG</h1>
+      <p class="university">University of the Philippines Mindanao</p>
+      <hr class="divider" aria-hidden="true">
+      <h2 id="signin-title">Student Portal</h2>
+      <p>Sign in to access the student directory</p>
+    </header>
 
-        <div class="form-options">
-          <label><input type="checkbox" name="remember"> Remember me</label>
-          <a href="#">Forgot password?</a>
-        </div>
+    <!-- Form: student number, password, options, and sign in button -->
+    <form action="Dashboard.html" aria-labelledby="signin-title">
 
-        <button type="submit" class="btn-primary">Sign in</button>
-      </form>
+      <p>
+        <label for="student-number">Student number</label><br>
+        <input id="student-number" name="student-number" type="text"
+               placeholder="e.g. 2026-17196" autocomplete="username" required>
+      </p>
 
-      <section class="demo-box" aria-labelledby="demo-title">
-        <h3 id="demo-title">Demo account</h3>
-        <p><strong>Student no:</strong> 2026-17196</p>
-        <p><strong>Password:</strong> UPMin@2026</p>
-        <button type="button" class="btn-secondary">Autofill</button>
-      </section>
+      <p>
+        <label for="password">Password</label><br>
+        <input id="password" name="password" type="password"
+               placeholder="Enter password" autocomplete="current-password" required>
+      </p>
+
+      <!-- Options row (3rd <p>, targeted by nth-of-type(3) in the CSS) -->
+      <p>
+        <label><input type="checkbox" name="remember"> Remember me</label>
+        <a href="#">Forgot password?</a>
+      </p>
+
+      <button type="submit">Sign in</button>
+    </form>
+
+    <!-- Demo account box -->
+    <section aria-labelledby="demo-title">
+      <h3 id="demo-title">Demo account</h3>
+      <p>Student no : 2026-17196</p>
+      <p>Password: UPMin@2026</p>
+      <button type="button">Autofill</button>
     </section>
+
   </main>
 
-  <footer class="page-footer" role="contentinfo">
+  <!-- ========== FOOTER: privacy link, copyright, motto ========== -->
+  <footer>
     <p><a href="#">Privacy Notice</a> · Data Privacy Act (RA 10173)</p>
     <p>© 2026 UP Mindanao · Mintal, Davao City</p>
     <p>"Transforming lifelong learners into responsive leaders"</p>
   </footer>
+
+  <!-- V4NZ K3$N S$Z()N was here -->
+
 </body>
 </html>
