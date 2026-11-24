@@ -160,14 +160,14 @@ KAPLAG uses an Apple-style look on top of Bootstrap. Override Bootstrap's CSS va
 
 | Token | Light | Dark | Used for |
 |-------|-------|------|----------|
-| Background | `#f5f5f7` | `#000000` | Page background |
-| Card | `#ffffff` | `#1c1c1e` | Cards and surfaces |
+| Background | `#f5f5f7` | `#faf9f6` | Page background |
+| Card | `#ffffff` | `#faf9f6` | Cards and surfaces |
 | Text | `#1d1d1f` | | Body text |
 | Muted | `#6e6e73` | | Secondary text |
 | Accent (`--bs-primary`) | `#0071e3` | `#0a84ff` | Primary button, links, focus ring |
 | Red | | | Urgent items only |
 
-- **Dark mode:** automatic, set through `data-bs-theme` from `prefers-color-scheme`.
+- **Dark mode:** uses dirty white (`#faf9f6`) for background and cards, set through `data-bs-theme` from `prefers-color-scheme`.
 - **Fonts:** system stack only (`-apple-system`, SF Pro, Inter, Segoe UI, Roboto, Arial, sans-serif). Nothing to download.
 - **Shape:** 12px input corners, 20–24px cards, soft shadows, a blue focus ring and one solid blue primary button per screen.
 - **Motion:** short transitions (150–250 ms), reduced when the device asks for it.

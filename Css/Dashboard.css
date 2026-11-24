@@ -4,12 +4,40 @@
   --maroon: #7b1113;
   --maroon-dark: #5a0c0e;
   --maroon-light: #f7eaea;
+  --green: #014421;
+  --green-dark: #003318;
+  --green-light: #e8f5ed;
+  --gold: #F3AA2C;         /* accent/warning color */
+  --gold-light: #fef3d6;   /* accent light tint */
   --text: #2b2b2b;
   --muted: #6b6b6b;
   --border: #d9d9d9;
   --bg: #f3f4f6;
   --surface: #ffffff;      /* card background */
   --on-maroon: #f1e9e6;    /* soft white for text on maroon */
+  --on-green: #f1f8f4;     /* soft white for text on green */
+
+  /* Primary theme colors (maroon) */
+  --primary: var(--maroon);
+  --primary-dark: var(--maroon-dark);
+  --primary-light: var(--maroon-light);
+  --on-primary: var(--on-maroon);
+
+  /* Header/Banner colors (green) */
+  --header-bg: var(--green);
+  --header-bg-dark: var(--green-dark);
+  --header-bg-light: var(--green-light);
+  --header-text: #ffffff;  /* pure white for max contrast on green */
+  --header-border: rgba(255, 255, 255, 0.4);
+  --header-hover: rgba(255, 255, 255, 0.2);
+  --header-active: rgba(255, 255, 255, 0.25);
+
+  /* Accent color (gold) for warnings, notifications */
+  --accent: var(--gold);
+  --accent-light: var(--gold-light);
+
+  /* Focus ring uses primary maroon */
+  --focus-ring: rgba(123, 17, 19, 0.35);
 }
 
 
@@ -39,20 +67,20 @@ body {
     url("../img/UP-Min-Admin.png") center / cover no-repeat fixed;
 }
 
-/* Links: maroon, no underline in any state */
+/* Links: primary maroon, no underline in any state */
 a {
-  color: var(--maroon);
+  color: var(--primary);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--maroon-dark);
+  color: var(--primary-dark);
   text-decoration: none;
 }
 
 /* Keyboard focus ring for all buttons */
 button:focus-visible {
-  outline: 3px solid rgba(123, 17, 19, 0.35);
+  outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
@@ -77,8 +105,9 @@ body > header {
   align-items: center;
   gap: 16px;
   padding: 10px 24px;
-  background: linear-gradient(90deg, var(--maroon-dark), var(--maroon));
-  color: var(--on-maroon);
+  background: var(--header-bg);
+  color: var(--header-text);
+  border-bottom: 1px solid var(--header-border);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
@@ -92,27 +121,37 @@ body > header {
   height: 40px;
   padding: 0 10px;
   background: transparent;
-  border: 1px solid rgba(241, 233, 230, 0.35);
+  border: 1px solid var(--header-border);
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
-  transition: background 0.2s;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .menu-toggle:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--header-hover);
+  border-color: var(--header-text);
+}
+
+.menu-toggle:active {
+  background: var(--header-active);
 }
 
 .menu-toggle span {
   display: block;
   height: 2px;
-  background: var(--on-maroon);
+  background: var(--on-primary);
   border-radius: 2px;
+  transition: background 0.2s;
+}
+
+.menu-toggle:hover span {
+  background: var(--on-primary);
 }
 
 /* Focus ring on the hamburger when the checkbox is focused with Tab */
 .nav-toggle:focus-visible ~ header .menu-toggle {
-  outline: 3px solid rgba(241, 233, 230, 0.6);
+  outline: 3px solid var(--header-text);
   outline-offset: 2px;
 }
 
@@ -121,11 +160,11 @@ body > header {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--on-maroon);
+  color: var(--on-primary);
 }
 
 .brand:hover {
-  color: var(--on-maroon);
+  color: var(--on-primary);
 }
 
 .brand-logo {
@@ -133,8 +172,9 @@ body > header {
   height: 42px;
   padding: 3px;
   object-fit: contain;
-  background: var(--surface);
+  background: var(--header-text);
   border-radius: 50%;
+  border: 2px solid var(--header-border);
 }
 
 .brand-text {
@@ -146,13 +186,14 @@ body > header {
 .brand-text strong {
   font-size: 1.15rem;
   letter-spacing: 3px;
+  color: var(--on-primary);
 }
 
 .brand-text small {
   font-size: 0.72rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  opacity: 0.8;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* Right side: pushed to the far end by the auto margin */
@@ -171,15 +212,21 @@ body > header {
   width: 40px;
   height: 40px;
   background: transparent;
-  color: var(--on-maroon);
-  border: 1px solid rgba(241, 233, 230, 0.35);
+  color: var(--header-text);
+  border: 1px solid var(--header-border);
   border-radius: 50%;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .icon-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--header-hover);
+  color: var(--header-text);
+  border-color: var(--header-text);
+}
+
+.icon-btn:active {
+  background: var(--header-active);
 }
 
 .icon-btn svg {
@@ -189,12 +236,12 @@ body > header {
 
 .notif-dot {
   position: absolute;
-  top: 8px;
-  right: 9px;
+  top: 6px;
+  right: 6px;
   width: 10px;
   height: 10px;
-  background: var(--on-maroon);
-  border: 2px solid var(--maroon);
+  background: var(--accent);
+  border: 2px solid var(--primary);
   border-radius: 50%;
 }
 
@@ -204,17 +251,23 @@ body > header {
   align-items: center;
   gap: 10px;
   padding: 5px 16px 5px 5px;
-  background: rgba(0, 0, 0, 0.18);
-  color: var(--on-maroon);
-  border: 1px solid rgba(241, 233, 230, 0.35);
+  background: var(--header-hover);
+  color: var(--header-text);
+  border: 1px solid var(--header-border);
   border-radius: 999px;
   text-align: left;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .profile-btn:hover {
-  background: var(--maroon-dark);
+  background: var(--header-active);
+  color: var(--header-text);
+  border-color: var(--header-text);
+}
+
+.profile-btn:active {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .avatar {
@@ -222,8 +275,8 @@ body > header {
   place-items: center;
   width: 34px;
   height: 34px;
-  background: var(--on-maroon);
-  color: var(--maroon);
+  background: var(--on-primary);
+  color: var(--primary);
   border-radius: 50%;
   font-size: 0.85rem;
   font-weight: 700;
@@ -238,12 +291,21 @@ body > header {
 .profile-name {
   font-size: 0.9rem;
   font-weight: 600;
+  color: var(--header-text);
+}
+
+.profile-btn:hover .profile-name {
+  color: var(--header-text);
 }
 
 .profile-id {
   font-size: 0.75rem;
   letter-spacing: 0.5px;
-  opacity: 0.8;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.profile-btn:hover .profile-id {
+  color: var(--header-text);
 }
 
 
@@ -260,7 +322,7 @@ body > nav {
   padding: 16px 12px;
   overflow: hidden;
   background: var(--surface);
-  border-top: 6px solid var(--maroon);
+  border-top: 6px solid var(--primary);
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   transition: width 0.25s ease, margin 0.25s ease, padding 0.25s ease,
@@ -297,15 +359,15 @@ body > nav a {
 }
 
 body > nav a:hover {
-  background: var(--maroon-light);
-  color: var(--maroon);
+  background: var(--primary-light);
+  color: var(--primary);
 }
 
 /* Current page: tinted background with a maroon accent bar */
 body > nav a[aria-current="page"] {
-  background: var(--maroon-light);
-  border-left-color: var(--maroon);
-  color: var(--maroon);
+  background: var(--primary-light);
+  border-left-color: var(--primary);
+  color: var(--primary);
   font-weight: 600;
 }
 
@@ -321,8 +383,8 @@ body > nav summary {
 }
 
 body > nav summary:hover {
-  background: var(--maroon-light);
-  color: var(--maroon);
+  background: var(--primary-light);
+  color: var(--primary);
 }
 
 body > nav details ul {
@@ -337,7 +399,7 @@ body > nav > p {
 }
 
 body > nav > p a {
-  color: var(--maroon);
+  color: var(--primary);
   font-weight: 600;
 }
 
@@ -357,7 +419,7 @@ body > main {
 main > section {
   padding: 24px;
   background: var(--surface);
-  border-top: 4px solid var(--maroon);
+  border-top: 4px solid var(--primary);
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
@@ -368,7 +430,7 @@ main > section h2 {
   padding-bottom: 10px;
   border-bottom: 1px solid var(--border);
   font-size: 1.15rem;
-  color: var(--maroon);
+  color: var(--primary);
 }
 
 /* Link line at the bottom of a card ("View full schedule", etc.) */
@@ -379,6 +441,7 @@ main > section > p:last-child {
 
 main > section > p:last-child a {
   font-weight: 600;
+  color: var(--primary);
 }
 
 /* Shared list style (today's classes, needs attention) */
@@ -423,8 +486,8 @@ main > section[aria-labelledby="summary"] {
 [role="tab"] {
   padding: 8px 16px;
   background: var(--surface);
-  color: var(--maroon);
-  border: 1px solid var(--maroon);
+  color: var(--primary);
+  border: 1px solid var(--primary);
   border-radius: 4px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -433,22 +496,22 @@ main > section[aria-labelledby="summary"] {
 }
 
 [role="tab"]:hover {
-  background: var(--maroon-light);
+  background: var(--primary-light);
 }
 
 /* Selected day: filled maroon */
 [role="tab"][aria-selected="true"],
 [role="tab"][aria-selected="true"]:hover {
-  background: var(--maroon);
-  color: var(--on-maroon);
+  background: var(--primary);
+  color: var(--on-primary);
 }
 
-/* "Up next" highlight box (same look as the demo box on the login page) */
+/* "Up next" highlight box */
 [role="tablist"] + p {
   margin: 0 0 16px;
   padding: 12px 16px;
-  background: var(--maroon-light);
-  border-left: 4px solid var(--maroon);
+  background: var(--primary-light);
+  border-left: 4px solid var(--primary);
   border-radius: 4px;
   font-size: 0.9rem;
 }
@@ -457,7 +520,7 @@ main > section[aria-labelledby="summary"] {
 /* ========== 7. NEEDS YOUR ATTENTION ========== */
 /* The first item is the most urgent, so its title is maroon */
 main > section[aria-labelledby="attention"] li:first-child strong {
-  color: var(--maroon);
+  color: var(--primary);
 }
 
 /* Inline action link (e.g. "View fees") */
@@ -465,6 +528,7 @@ main > section[aria-labelledby="attention"] li a {
   display: inline-block;
   margin-top: 4px;
   font-weight: 600;
+  color: var(--primary);
 }
 
 
@@ -475,7 +539,7 @@ main article {
   padding: 16px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-left: 4px solid var(--maroon);
+  border-left: 4px solid var(--primary);
   border-radius: 4px;
 }
 
@@ -538,7 +602,7 @@ progress {
   border: none;
   border-radius: 5px;
   background: var(--border);
-  color: var(--maroon);
+  color: var(--primary);
 }
 
 progress::-webkit-progress-bar {
@@ -547,12 +611,12 @@ progress::-webkit-progress-bar {
 }
 
 progress::-webkit-progress-value {
-  background: var(--maroon);
+  background: var(--primary);
   border-radius: 5px;
 }
 
 progress::-moz-progress-bar {
-  background: var(--maroon);
+  background: var(--primary);
   border-radius: 5px;
 }
 
@@ -560,15 +624,15 @@ progress::-moz-progress-bar {
 /* ========== 10. GREETING (placed late so it overrides the shared card rules) ========== */
 /* Tinted card with a left accent bar, like the login demo box */
 main > section[aria-labelledby="greeting"] {
-  background: var(--maroon-light);
+  background: var(--primary-light);
   border-top: none;
-  border-left: 4px solid var(--maroon);
+  border-left: 4px solid var(--primary);
 }
 
 main > section[aria-labelledby="greeting"] h1 {
   margin: 0;
   font-size: 1.6rem;
-  color: var(--maroon);
+  color: var(--primary);
 }
 
 main > section[aria-labelledby="greeting"] p {
@@ -629,7 +693,7 @@ body > footer p {
     width: auto;
     margin: 16px 16px 0;
     padding: 16px 12px;
-    border-top: 6px solid var(--maroon);
+    border-top: 6px solid var(--primary);
     opacity: 1;
     visibility: visible;
   }

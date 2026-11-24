@@ -171,7 +171,7 @@ look):
   --bs-body-bg #f5f5f7, cards #ffffff, text #1d1d1f, muted #6e6e73
   --bs-primary #0071e3 (dark mode #0a84ff), red for urgent only
 Dark mode: automatic via data-bs-theme (set from prefers-color-scheme);
-  bg #000000, cards #1c1c1e.
+  bg #faf9f6, cards #faf9f6.
 Fonts:  system stack only (-apple-system, SF Pro, Inter, Segoe UI,
         Roboto, Arial, sans-serif). Nothing to download.
 Shape:  12 px input corners, 20-24 px cards, soft shadows, blue focus

@@ -438,8 +438,8 @@ Do not copy GoTyme's branding or assume its mobile banking patterns are automati
 
 | Token | Light | Dark |
 |-------|-------|------|
-| Background | `#f5f5f7` | `#000000` |
-| Cards | `#ffffff` | `#1c1c1e` |
+| Background | `#f5f5f7` | `#faf9f6` |
+| Cards | `#ffffff` | `#faf9f6` |
 | Text | `#1d1d1f` | |
 | Muted text | `#6e6e73` | |
 | Accent (`--bs-primary`) | `#0071e3` | `#0a84ff` |
