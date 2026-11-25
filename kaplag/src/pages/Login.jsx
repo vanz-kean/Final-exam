@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
-import Logo from '../assets/Logo.png'; // Will use public/img path instead
 
 // Demo account credentials from original Login.html
 const DEMO_ACCOUNT = {
@@ -9,6 +9,7 @@ const DEMO_ACCOUNT = {
 };
 
 const Login = ({ onLogin }) => {
+  const navigate = useNavigate();
   const [studentNumber, setStudentNumber] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -26,6 +27,7 @@ const Login = ({ onLogin }) => {
       await new Promise(resolve => setTimeout(resolve, 500));
       setIsLoading(false);
       onLogin?.({ studentNumber, name: 'Vanz Kean', program: 'BS Computer Science' });
+      navigate('/dashboard', { replace: true });
     } else {
       setError('Invalid student number or password. Try the demo account.');
     }
@@ -38,7 +40,7 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-vh-100 d-flex align-items-center justify-content-center p-4" style={{ backgroundColor: 'var(--bg)' }}>
+    <div className="login-page min-vh-100 d-flex align-items-center justify-content-center p-4">
       <Container className="w-100">
         <Row className="justify-content-center">
           <Col xs={12} sm={10} md={8} lg={6} xl={5}>
@@ -111,9 +113,9 @@ const Login = ({ onLogin }) => {
                       disabled={isLoading}
                       className="text-muted-custom small"
                     />
-                    <a href="#" className="text-maroon small fw-medium" disabled={isLoading}>
+                    <button type="button" className="btn btn-link p-0 text-maroon small fw-medium" disabled={isLoading}>
                       Forgot password?
-                    </a>
+                    </button>
                   </div>
 
                   {/* Sign In Button */}
@@ -157,7 +159,7 @@ const Login = ({ onLogin }) => {
             {/* Footer */}
             <footer className="text-center mt-4 footer-text" role="contentinfo">
               <p>
-                <a href="#" className="text-maroon">Privacy Notice</a>{' '}
+                <a href="/privacy" className="text-maroon">Privacy Notice</a>{' '}
                 · Data Privacy Act (RA 10173)
               </p>
               <p>© 2026 UP Mindanao · Mintal, Davao City</p>
