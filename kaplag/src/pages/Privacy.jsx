@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { useTranslation } from '../context/TranslationContext.jsx';
 
 const Privacy = () => {
+  const { translate } = useTranslation();
   const [accepted, setAccepted] = useState(false);
 
   return (
     <>
       <section className="portal-card card-full privacy-heading">
-        <h1 tabIndex="-1">UP Privacy Notice for Students</h1>
+        <h1 tabIndex="-1">{translate('UP Privacy Notice for Students')}</h1>
         <p>
           University of the Philippines · Revised as of 1st Semester/Trimester
           2024–2025. Effective starting the 1st semester of AY 2024–2025. It
@@ -15,52 +17,43 @@ const Privacy = () => {
       </section>
 
       <section className="portal-card card-full" aria-labelledby="short-version">
-        <h2 id="short-version">The short version</h2>
-        <p>Don't have time to read it all? Here's what matters.</p>
+        <h2 id="short-version">{translate('The short version')}</h2>
+        <p>{translate("Don't have time to read it all? Here's what matters.")}</p>
         <ul className="portal-list">
           <li>
-            <strong>Why UP has your data:</strong> to enroll you, teach and
-            grade you, serve you, keep campus safe, and follow the law.
+            <strong>{translate('Why UP has your data:')}</strong> {translate('to enroll you, teach and grade you, serve you, keep campus safe, and follow the law.')}
           </li>
           <li>
-            <strong>The legal basis:</strong> when you enroll and sign the UP
-            student pledge, you enter a contract with UP. Most data processing
-            for your education rests on that contract, so UP doesn't need new
-            consent each time.
+            <strong>{translate('The legal basis:')}</strong> {translate('when you enroll and sign the UP student pledge, you enter a contract with UP. Most data processing for your education rests on that contract, so UP doesn\'t need new consent each time.')}
           </li>
           <li>
-            <strong>The law behind it:</strong> the Philippine Data Privacy Act
-            of 2012 (DPA).
+            <strong>{translate('The law behind it:')}</strong> {translate('the Philippine Data Privacy Act of 2012 (DPA).')}
           </li>
           <li>
-            <strong>Who sees it:</strong> authorized UP personnel who need it
-            for their work, plus outside parties when the law requires it or
-            you consent.
+            <strong>{translate('Who sees it:')}</strong> {translate('authorized UP personnel who need it for their work, plus outside parties when the law requires it or you consent.')}
           </li>
           <li>
-            <strong>Your rights:</strong> you can see and correct your data,
-            and in some cases object to processing or withdraw consent.
+            <strong>{translate('Your rights:')}</strong> {translate('you can see and correct your data, and in some cases object to processing or withdraw consent.')}
           </li>
           <li>
-            <strong>Questions?</strong> Contact the UP Mindanao Data Protection
-            Officer in the <a href="#contact">contact section</a>.
+            <strong>{translate('Questions?')}</strong> {translate('Contact the UP Mindanao Data Protection Officer in the')} <a href="#contact">{translate('contact section')}</a>.
           </li>
         </ul>
       </section>
 
       <section className="portal-card card-full" aria-labelledby="privacy-toc">
-        <h2 id="privacy-toc">Jump to a section</h2>
+        <h2 id="privacy-toc">{translate('Jump to a section')}</h2>
         <ol className="privacy-toc">
-          <li><a href="#policy">What this notice is about</a></li>
-          <li><a href="#basis">Why UP can process your data</a></li>
-          <li><a href="#collected">What UP collects, and why</a></li>
-          <li><a href="#storage">Storage and research</a></li>
-          <li><a href="#rfid">Your UP ID (RFID)</a></li>
-          <li><a href="#sharing">Who your data may be shared with</a></li>
-          <li><a href="#protection">Risks and how UP protects your data</a></li>
-          <li><a href="#rights">Your rights</a></li>
-          <li><a href="#consent">Consent and how to withdraw it</a></li>
-          <li><a href="#contact">Contact the Data Protection Officer</a></li>
+          <li><a href="#policy">{translate('What this notice is about')}</a></li>
+          <li><a href="#basis">{translate('Why UP can process your data')}</a></li>
+          <li><a href="#collected">{translate('What UP collects, and why')}</a></li>
+          <li><a href="#storage">{translate('Storage and research')}</a></li>
+          <li><a href="#rfid">{translate('Your UP ID (RFID)')}</a></li>
+          <li><a href="#sharing">{translate('Who your data may be shared with')}</a></li>
+          <li><a href="#protection">{translate('Risks and how UP protects your data')}</a></li>
+          <li><a href="#rights">{translate('Your rights')}</a></li>
+          <li><a href="#consent">{translate('Consent and how to withdraw it')}</a></li>
+          <li><a href="#contact">{translate('Contact the Data Protection Officer')}</a></li>
         </ol>
       </section>
 
@@ -523,11 +516,9 @@ const Privacy = () => {
       </section>
 
       <section className="portal-card card-full">
-        <h2>Confirmation</h2>
+        <h2>{translate('Confirmation')}</h2>
         <p>
-          Confirm that you have read this notice. Any consent that UP needs
-          from you for specific activities is collected separately through
-          official UP consent forms.
+          {translate('Confirm that you have read this notice. Any consent that UP needs from you for specific activities is collected separately through official UP consent forms.')}
         </p>
         <label className="read-confirmation">
           <input
@@ -535,20 +526,20 @@ const Privacy = () => {
             checked={accepted}
             onChange={(event) => setAccepted(event.target.checked)}
           />
-          I have read and understood the UP Privacy Notice for Students.
+          {translate('I have read and understood the UP Privacy Notice for Students.')}
         </label>
         {accepted && (
           <p className="success-message" role="status">
-            Thank you. Your confirmation has been recorded for this session.
+            {translate('Thank you. Your confirmation has been recorded for this session.')}
           </p>
         )}
       </section>
 
       <section className="portal-card card-full">
         <p>
-          Source:{' '}
+          {translate('Source:')}{' '}
           <a href="https://privacy.up.edu.ph/" target="_blank" rel="noreferrer">
-            UP Privacy Policies
+            {translate('UP Privacy Policies')}
           </a>
           {' · '}
           <a
@@ -556,10 +547,10 @@ const Privacy = () => {
             target="_blank"
             rel="noreferrer"
           >
-            Notice revised as of 1st Semester 2024–2025 (PDF)
+            {translate('Notice revised as of 1st Semester 2024–2025 (PDF)')}
           </a>
         </p>
-        <p>This page summarizes the official notice. If anything differs, the official notice applies.</p>
+        <p>{translate('This page summarizes the official notice. If anything differs, the official notice applies.')}</p>
       </section>
     </>
   );

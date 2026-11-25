@@ -9,8 +9,9 @@ The full list of rules and decisions lives in [`requirements.txt`](requirements.
 | Part | State |
 |------|-------|
 | Login, Dashboard, Privacy, Prospectus | Finished as plain HTML (reference design and content) |
-| React + Bootstrap version | Planned: convert the four pages above into components |
-| ClassSchedule, Grades, Fees, Announcements, UPMail, StudentInformation, Evaluations, CampusFacility, CollegeFacility, StudentHousing | Not built yet (show a "Coming soon" screen) |
+| React + Bootstrap version | In progress: Dashboard, Registration, Class Schedule, Grades, Privacy, and Prospectus |
+| Fees, Announcements, UPMail, StudentInformation, Evaluations, CampusFacility, CollegeFacility, StudentHousing | Not built yet (show a "Coming soon" screen) |
+| School Calendar | Shows the proposed UP Mindanao AY 2026–2027 dates and official holidays |
 
 ## Tech stack
 
@@ -68,11 +69,16 @@ kaplag/
     ├── pages/
     │   ├── Login.jsx
     │   ├── Dashboard.jsx
+    │   ├── Registration.jsx
+    │   ├── ClassSchedule.jsx
+    │   ├── SchoolCalendar.jsx
     │   ├── Prospectus.jsx
     │   ├── Privacy.jsx
     │   └── ...              The ten pages still to build
     └── data/
         ├── student.js       Name, student number, program, curriculum
+        ├── registration.js  Available block, PE, and NSTP sections
+        ├── academicCalendar.js  AY 2026–2027 dates and holidays
         ├── prospectus.js    Terms and courses (swap per student)
         └── sample.js        Schedule, fees, grades, announcements
 ```
@@ -87,7 +93,9 @@ kaplag/
 |-------|------|
 | `/login` | Login (default route redirects here) |
 | `/dashboard` | Dashboard |
+| `/registration` | Registration |
 | `/class-schedule` | Class Schedule |
+| `/school-calendar` | School Calendar |
 | `/grades` | Grades |
 | `/fees` | Fees |
 | `/prospectus` | Prospectus |
@@ -135,7 +143,8 @@ Focus moves to the page `<h1>` after each route change.
 |------|---------------|------------------|
 | Login | Student number, password, show/hide password, remember me, forgot password, sign in, demo account, privacy link | Form validation, Alert |
 | Dashboard | Greeting, today's classes with day tabs and "Up next", needs your attention (most urgent first), announcements, completion of degree | Nav tabs, Badge, Card, ProgressBar |
-| Class Schedule | Day view with tabs; current and next class highlighted | Nav tabs |
+| Class Schedule | Weekly timetable and list view built from saved registration sections | Responsive timetable |
+| School Calendar | Search and filter all AY 2026–2027 academic events and holidays by term | Filtered event list |
 | Grades | GWA on top, latest term first, INC and failing grades flagged | Table, Badge |
 | Fees | Amount due and due date at the top, breakdown, payment steps | Table |
 | Prospectus | Student details and one table per term, with filter, search and live unit totals | Accordion, Table (responsive) |
@@ -199,6 +208,8 @@ Inspired by how mobile banking apps work:
 - **Session:** the logged-in demo student is kept in React state (and `sessionStorage` if needed).
 - **Dashboard:** day tabs, "Up next" countdown, days-left math and a time-of-day greeting.
 - **Prospectus:** expand or collapse terms, filter "Not yet taken", search by course code, and unit totals calculated from the data.
+- **Registration and Class Schedule:** the weekly schedule uses the block, PE, and NSTP sections saved during registration in the current browser session.
+- **School Calendar:** shows all supplied AY 2026–2027 academic dates and official holidays, with term filters and event search.
 - **Privacy:** expand or collapse all sections, read-and-understood behavior and copy buttons.
 
 Not allowed unless asked: server calls, real authentication, real student data in the code and tracking.
@@ -208,6 +219,8 @@ Not allowed unless asked: server calls, real authentication, real student data i
 | To change | Edit |
 |-----------|------|
 | Student name, number, program, curriculum | `src/data/student.js` |
+| Registered class offerings | `src/data/registration.js` |
+| Academic-year events and holidays | `src/data/academicCalendar.js` |
 | Courses and terms in the prospectus | `src/data/prospectus.js` |
 | Schedule, fees, grades, announcements | `src/data/sample.js` |
 | Brand colors and Bootstrap look | Variables in `src/styles/theme.css` |

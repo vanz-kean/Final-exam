@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { useTranslation } from '../context/TranslationContext.jsx';
 
 // Demo account credentials from original Login.html
 const DEMO_ACCOUNT = {
@@ -13,6 +14,7 @@ const UP_MAIL_DOMAINS = ['@up.edu.ph', '@upmindanao.edu.ph'];
 
 const Login = ({ onLogin }) => {
   const navigate = useNavigate();
+  const { translate } = useTranslation();
   const [studentNumber, setStudentNumber] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -143,11 +145,11 @@ const Login = ({ onLogin }) => {
                     alt="UP Mindanao logo"
                     className="login-logo mb-3"
                   />
-                  <h1 className="h3 fw-bold text-maroon mb-1">KAPLAG</h1>
-                  <p className="text-muted-custom mb-2">University of the Philippines Mindanao</p>
+                  <h1 className="h3 fw-bold text-maroon mb-1">{translate('KAPLAG')}</h1>
+                  <p className="text-muted-custom mb-2">{translate('University of the Philippines Mindanao')}</p>
                   <hr className="login-divider my-3" aria-hidden="true" />
-                  <h2 id="signin-title" className="h5 fw-semibold">Student Portal</h2>
-                  <p className="text-muted-custom small">Sign in to access the student directory</p>
+                  <h2 id="signin-title" className="h5 fw-semibold">{translate('Student Portal')}</h2>
+                  <p className="text-muted-custom small">{translate('Sign in to access the student directory')}</p>
                 </div>
 
                 {/* Error Alert */}
@@ -161,7 +163,7 @@ const Login = ({ onLogin }) => {
                 <Form onSubmit={handleSubmit} noValidate aria-labelledby="signin-title">
                   {/* Student Number */}
                   <Form.Group className="mb-3" controlId="student-number">
-                    <Form.Label className="form-label fw-medium">Student number</Form.Label>
+                    <Form.Label className="form-label fw-medium">{translate('Student number')}</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="e.g. 2026-17196"
@@ -173,16 +175,16 @@ const Login = ({ onLogin }) => {
                       aria-describedby="student-number-help"
                     />
                     <div id="student-number-help" className="form-text text-muted-custom small">
-                      Your UP student number (format: YYYY-NNNNN)
+                      {translate('Your UP student number (format: YYYY-NNNNN)')}
                     </div>
                   </Form.Group>
 
                   {/* Password */}
                   <Form.Group className="mb-3" controlId="password">
-                    <Form.Label className="form-label fw-medium">Password</Form.Label>
+                    <Form.Label className="form-label fw-medium">{translate('Password')}</Form.Label>
                     <Form.Control
                       type="password"
-                      placeholder="Enter password"
+                      placeholder={translate('Enter password')}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       autoComplete="current-password"
@@ -195,14 +197,14 @@ const Login = ({ onLogin }) => {
                   <div className="d-flex justify-content-between align-items-center mb-4">
                     <Form.Check
                       type="checkbox"
-                      label="Remember me"
+                      label={translate('Remember me')}
                       checked={remember}
                       onChange={(e) => setRemember(e.target.checked)}
                       disabled={isLoading}
                       className="text-muted-custom small"
                     />
                     <button type="button" className="btn btn-link p-0 text-maroon small fw-medium" disabled={isLoading}>
-                      Forgot password?
+                      {translate('Forgot password?')}
                     </button>
                   </div>
 
@@ -217,10 +219,10 @@ const Login = ({ onLogin }) => {
                     {isLoading ? (
                       <span className="d-flex align-items-center justify-content-center gap-2">
                         <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                        Signing in...
+                        {translate('Signing in...')}
                       </span>
                     ) : (
-                      'Sign in'
+                      translate('Sign in')
                     )}
                   </Button>
                 </Form>
@@ -255,16 +257,16 @@ const Login = ({ onLogin }) => {
                           d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                         />
                       </svg>
-                      {googleLoaded ? 'Continue with Google' : 'Loading Google Sign-In...'}
+                      {googleLoaded ? translate('Continue with Google') : translate('Loading Google Sign-In...')}
                     </Button>
                   )}
                 </div>
 
                 {/* Demo Account Box */}
                 <div className="demo-box mt-4" role="region" aria-labelledby="demo-title">
-                  <h3 id="demo-title">Demo account</h3>
-                  <p><strong>Student no:</strong> {DEMO_ACCOUNT.studentNumber}</p>
-                  <p><strong>Password:</strong> {DEMO_ACCOUNT.password}</p>
+                  <h3 id="demo-title">{translate('Demo account')}</h3>
+                  <p><strong>{translate('Student no:')}</strong> {DEMO_ACCOUNT.studentNumber}</p>
+                  <p><strong>{translate('Password:')}</strong> {DEMO_ACCOUNT.password}</p>
                   <Button
                     variant="outline-secondary"
                     size="sm"
@@ -272,7 +274,7 @@ const Login = ({ onLogin }) => {
                     disabled={isLoading}
                     className="w-100 w-md-auto"
                   >
-                    Autofill
+                    {translate('Autofill')}
                   </Button>
                 </div>
 
@@ -282,10 +284,10 @@ const Login = ({ onLogin }) => {
             {/* Footer */}
             <footer className="text-center mt-4 footer-text" role="contentinfo">
               <p>
-                <a href="/privacy" className="text-maroon">Privacy Notice</a>{' '}
+                <a href="/privacy" className="text-maroon">{translate('Privacy Notice')}</a>{' '}
                 · Data Privacy Act (RA 10173)
               </p>
-              <p>© 2026 UP Mindanao · Mintal, Davao City</p>
+              <p>{translate('© 2026 University of the Philippines Mindanao')} · Mintal, Davao City</p>
               <p className="fst-italic small">"Transforming lifelong learners into responsive leaders"</p>
             </footer>
 

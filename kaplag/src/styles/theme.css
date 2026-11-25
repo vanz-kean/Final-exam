@@ -166,6 +166,47 @@ a:hover {
   border-radius: 2px;
 }
 
+/* Language toggle button */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 0 12px;
+  background: transparent;
+  border: 1px solid rgba(241, 233, 230, 0.35);
+  border-radius: 4px;
+  color: var(--on-maroon);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.lang-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.lang-toggle:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.lang-toggle span:first-child {
+  font-size: 1rem;
+}
+
+/* Header actions container */
+.header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 /* Card with top accent border (like original) */
 .card-accent-top {
   border-top: 4px solid var(--maroon) !important;
@@ -738,6 +779,163 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
 .read-confirmation { display: flex; align-items: center; gap: 8px; min-height: 44px; }
 .success-message { color: var(--bs-success); font-weight: 700; }
 .empty-page { grid-column: 1 / -1; max-width: 600px; }
+
+/* Class schedule */
+.schedule-heading,
+.calendar-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.schedule-heading h1,
+.calendar-heading h1 { margin: 0; }
+.schedule-heading p,
+.calendar-heading p { margin: 6px 0 0; color: var(--muted); }
+.schedule-kicker,
+.calendar-kicker {
+  margin: 0 0 4px !important;
+  color: var(--green) !important;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.schedule-view-toggle { display: flex; gap: 8px; }
+.schedule-view-toggle button {
+  min-height: 42px;
+  padding: 8px 16px;
+  border: 1px solid var(--maroon);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--maroon);
+  font-weight: 700;
+}
+.schedule-view-toggle button[aria-pressed="true"] { background: var(--maroon); color: var(--on-maroon); }
+.registered-schedule { min-width: 0; }
+.schedule-scroll { overflow-x: auto; }
+.weekly-timetable {
+  --schedule-hour-height: 64px;
+  display: grid;
+  grid-template-columns: 76px repeat(7, minmax(128px, 1fr));
+  min-width: 1050px;
+}
+.timetable-header {
+  display: grid;
+  min-height: 48px;
+  place-items: center;
+  border-left: 1px solid rgba(255,255,255,.2);
+  background: var(--maroon);
+  color: var(--on-maroon);
+  font-size: .85rem;
+  font-weight: 700;
+}
+.timetable-time-header { border-left: 0; }
+.timetable-times,
+.timetable-day {
+  position: relative;
+  height: calc(var(--schedule-hour-height) * 12);
+}
+.timetable-times { background: var(--maroon-light); }
+.timetable-times span {
+  position: absolute;
+  right: 6px;
+  color: var(--muted);
+  font-size: .72rem;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+.timetable-day {
+  border-left: 1px solid var(--border);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--schedule-hour-height) - 1px),
+    var(--border) calc(var(--schedule-hour-height) - 1px),
+    var(--border) var(--schedule-hour-height)
+  );
+}
+.timetable-event {
+  position: absolute;
+  z-index: 1;
+  right: 4px;
+  left: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  overflow: hidden;
+  border-left: 4px solid var(--maroon);
+  border-radius: 5px;
+  background: var(--maroon-light);
+  color: var(--maroon-dark);
+  font-size: .72rem;
+  line-height: 1.3;
+}
+.timetable-event strong { font-size: .78rem; }
+.timetable-event.pe-selection { border-left-color: var(--green); background: var(--green-light); color: var(--green-dark); }
+.timetable-event.nstp-selection { border-left-color: #b87900; background: var(--gold-light); color: #684500; }
+.schedule-list-wrap { overflow-x: auto; }
+.schedule-list { width: 100%; min-width: 620px; border-collapse: collapse; }
+.schedule-list th,
+.schedule-list td { padding: 12px; border-bottom: 1px solid var(--border); text-align: left; }
+.schedule-list thead th { background: var(--maroon-light); }
+.schedule-list tbody tr:last-child th,
+.schedule-list tbody tr:last-child td { border-bottom: 0; }
+.schedule-disclaimer { margin: 16px 0 0; color: var(--muted); font-size: .85rem; }
+.schedule-empty h1 { margin: 0 0 8px; }
+.schedule-empty p { color: var(--muted); }
+
+/* School calendar */
+.calendar-event-count {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--green-light);
+  color: var(--green-dark);
+  font-size: .85rem;
+  font-weight: 700;
+}
+.calendar-filters {
+  display: grid;
+  grid-template-columns: minmax(180px, .7fr) minmax(240px, 1.3fr);
+  gap: 16px;
+}
+.calendar-filters label { display: grid; gap: 6px; font-weight: 700; }
+.calendar-filters select,
+.calendar-filters input {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+}
+.calendar-month { padding: 0; overflow: hidden; }
+.calendar-month h2 {
+  margin: 0;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--maroon-light);
+}
+.calendar-event-list { margin: 0; padding: 0; list-style: none; }
+.calendar-event {
+  display: grid;
+  grid-template-columns: minmax(180px, .45fr) minmax(0, 1.55fr);
+  gap: 20px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.calendar-event:last-child { border-bottom: 0; }
+.calendar-event-date { display: flex; flex-wrap: wrap; align-content: start; gap: 4px; color: var(--maroon); font-size: .9rem; font-weight: 700; }
+.calendar-event-detail h3 { margin: 0; font-size: 1rem; }
+.calendar-event-detail p { margin: 4px 0 0; color: var(--muted); font-size: .82rem; }
+.calendar-empty h2 { margin: 0 0 4px; }
+.calendar-empty p { margin: 0; color: var(--muted); }
+.calendar-source h2 { margin: 0 0 12px; }
+.calendar-source p { margin-bottom: 8px; }
+.calendar-source li { margin: 6px 0; }
+.calendar-source-reference { margin-top: 16px; color: var(--muted); font-size: .85rem; }
 
 /* Grades */
 .grades-title p { margin-bottom: 0; color: var(--muted); }

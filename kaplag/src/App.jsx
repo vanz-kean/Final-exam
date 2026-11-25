@@ -8,6 +8,8 @@ import Prospectus from './pages/Prospectus';
 import Privacy from './pages/Privacy';
 import Grades from './pages/Grades';
 import Registration from './pages/Registration';
+import ClassSchedule from './pages/ClassSchedule';
+import SchoolCalendar from './pages/SchoolCalendar';
 
 const ProtectedRoute = ({ user, children }) => {
   if (!user) {
@@ -43,7 +45,8 @@ function App() {
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="registration" element={<Registration />} />
-          <Route path="class-schedule" element={<ComingSoon title="Class Schedule" />} />
+          <Route path="class-schedule" element={<ClassSchedule />} />
+          <Route path="school-calendar" element={<SchoolCalendar />} />
           <Route path="grades" element={<Grades />} />
           <Route path="fees" element={<ComingSoon title="Fees" />} />
           <Route path="prospectus" element={<Prospectus />} />

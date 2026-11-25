@@ -1,9 +1,11 @@
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from '../context/TranslationContext.jsx';
 
 const mainLinks = [
   ['Dashboard', '/dashboard'],
   ['Registration', '/registration'],
   ['Class Schedule', '/class-schedule'],
+  ['School Calendar', '/school-calendar'],
   ['Grades', '/grades'],
   ['Fees', '/fees'],
   ['Prospectus', '/prospectus'],
@@ -20,25 +22,29 @@ const moreLinks = [
   ['UP Privacy Notice', '/privacy'],
 ];
 
-const Sidebar = ({ open, onClose, onLogout }) => (
-  <>
-    {open && <button type="button" className="sidebar-backdrop" onClick={onClose} aria-label="Close navigation" />}
-    <aside id="primary-navigation" className={`portal-sidebar ${open ? 'open' : ''}`} aria-label="Main navigation">
-      <button type="button" className="sidebar-close" onClick={onClose} aria-label="Close navigation">×</button>
-      <nav>
-        {mainLinks.map(([label, to]) => (
-          <NavLink key={to} to={to} onClick={onClose} className={({ isActive }) => isActive ? 'active' : ''}>{label}</NavLink>
-        ))}
-        <details>
-          <summary>More</summary>
-          {moreLinks.map(([label, to]) => (
-            <NavLink key={to} to={to} onClick={onClose} className={({ isActive }) => isActive ? 'active' : ''}>{label}</NavLink>
+const Sidebar = ({ open, onClose, onLogout }) => {
+  const { translate } = useTranslation();
+
+  return (
+    <>
+      {open && <button type="button" className="sidebar-backdrop" onClick={onClose} aria-label={translate('Close navigation')} />}
+      <aside id="primary-navigation" className={`portal-sidebar ${open ? 'open' : ''}`} aria-label="Main navigation">
+        <button type="button" className="sidebar-close" onClick={onClose} aria-label={translate('Close navigation')}>×</button>
+        <nav>
+          {mainLinks.map(([label, to]) => (
+            <NavLink key={to} to={to} onClick={onClose} className={({ isActive }) => isActive ? 'active' : ''}>{translate(label)}</NavLink>
           ))}
-        </details>
-      </nav>
-      <button type="button" className="logout-link" onClick={onLogout}>Log out</button>
-    </aside>
-  </>
-);
+          <details>
+            <summary>{translate('More')}</summary>
+            {moreLinks.map(([label, to]) => (
+              <NavLink key={to} to={to} onClick={onClose} className={({ isActive }) => isActive ? 'active' : ''}>{translate(label)}</NavLink>
+            ))}
+          </details>
+        </nav>
+        <button type="button" className="logout-link" onClick={onLogout}>{translate('Logout')}</button>
+      </aside>
+    </>
+  );
+};
 
 export default Sidebar;

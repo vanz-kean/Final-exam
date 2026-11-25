@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { student } from '../data/student';
 import { blockSchedules, nstpSections, peCourseNames, peSections } from '../data/registration';
+import { useTranslation } from '../context/TranslationContext.jsx';
 
 const getPELabel = (course) => (
   peCourseNames[course] ? `${course} (${peCourseNames[course]})` : course
@@ -15,6 +16,7 @@ const hasTimeConflict = (blockCourses, offering) => blockCourses.some((course) =
 const Registration = () => {
   const confirmationDialogRef = useRef(null);
   const summaryHeadingRef = useRef(null);
+  const { translate } = useTranslation();
   const [selection, setSelection] = useState(() => {
     const saved = sessionStorage.getItem('kaplag-registration');
     return saved
@@ -107,27 +109,27 @@ const Registration = () => {
         <>
           <section className="portal-card card-full registration-summary-heading">
             <div>
-              <p className="registration-summary-kicker">Registration complete</p>
-              <h1 ref={summaryHeadingRef} tabIndex="-1">Registration summary</h1>
+              <p className="registration-summary-kicker">{translate('Registration complete')}</p>
+              <h1 ref={summaryHeadingRef} tabIndex="-1">{translate('Registration summary')}</h1>
               <p className="registration-term">
                 {student.program} · {student.year} · {student.semester} {student.academicYear}
               </p>
             </div>
-            <span className="registration-status">Saved for this session</span>
+            <span className="registration-status">{translate('Saved for this session')}</span>
           </section>
 
           <section className="portal-card card-full registration-summary-card">
-            <h2>Student information</h2>
+            <h2>{translate('Student information')}</h2>
             <dl className="registration-summary-details">
-              <dt>Student number</dt>
+              <dt>{translate('Student number')}</dt>
               <dd>{student.studentNumber}</dd>
-              <dt>Name</dt>
+              <dt>{translate('Name')}</dt>
               <dd>{student.fullName}</dd>
-              <dt>Program</dt>
+              <dt>{translate('Program')}</dt>
               <dd>{student.program}</dd>
-              <dt>Curriculum</dt>
+              <dt>{translate('Curriculum')}</dt>
               <dd>{student.curriculum}</dd>
-              <dt>Block section</dt>
+              <dt>{translate('Block section')}</dt>
               <dd>{selectedBlock.id}</dd>
             </dl>
           </section>
@@ -135,8 +137,8 @@ const Registration = () => {
           <section className="portal-card card-full registration-summary-card">
             <div className="registration-schedule-heading">
               <div>
-                <h2>Enlisted schedules</h2>
-                <p>These are the block courses and sections you selected.</p>
+                <h2>{translate('Enlisted schedules')}</h2>
+                <p>{translate('These are the block courses and sections you selected.')}</p>
               </div>
               <span>{student.semester} {student.academicYear}</span>
             </div>
@@ -144,11 +146,11 @@ const Registration = () => {
               <table className="table kaplag-table registration-summary-table">
                 <thead>
                   <tr>
-                    <th scope="col">Course</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Section</th>
-                    <th scope="col">Day(s)</th>
-                    <th scope="col">Time</th>
+                    <th scope="col">{translate('Course')}</th>
+                    <th scope="col">{translate('Type')}</th>
+                    <th scope="col">{translate('Section')}</th>
+                    <th scope="col">{translate('Day(s)')}</th>
+                    <th scope="col">{translate('Time')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -165,21 +167,21 @@ const Registration = () => {
               </table>
             </div>
             <p className="registration-note">
-              This prototype stores your selections in this browser session only. It does not submit an official UP registration.
+              {translate('This prototype stores your selections in this browser session only. It does not submit an official UP registration.')}
             </p>
           </section>
 
           <section className="portal-card card-full registration-summary-card registration-summary-actions">
             <button type="button" className="btn btn-outline-primary" onClick={() => setSaved(false)}>
-              Change selections
+              {translate('Change selections')}
             </button>
           </section>
         </>
       ) : (
         <>
           <section className="portal-card card-full registration-heading">
-            <h1 tabIndex="-1">Registration</h1>
-            <p>Choose your block, then select PE and NSTP sections that fit your schedule.</p>
+            <h1 tabIndex="-1">{translate('Registration')}</h1>
+            <p>{translate('Choose your block, then select PE and NSTP sections that fit your schedule.')}</p>
             <p className="registration-term">
               {student.program} · {student.year} · {student.semester} {student.academicYear}
             </p>
@@ -187,8 +189,8 @@ const Registration = () => {
 
       <form className="registration-form" onSubmit={reviewRegistration}>
         <section className="portal-card card-full">
-          <h2>1. Choose your block</h2>
-          <p>Compare the available block schedules below. Only blocks for your year level are shown.</p>
+          <h2>{translate('1. Choose your block')}</h2>
+          <p>{translate('Compare the available block schedules below. Only blocks for your year level are shown.')}</p>
           <div className="registration-block-grid">
             {availableBlocks.map((block) => (
               <section
@@ -208,19 +210,19 @@ const Registration = () => {
                     />
                     <span>
                       <strong id={`block-title-${block.id}`}>{block.id}</strong>
-                      <small>BSCS · {block.year} · Second semester</small>
+                      <small>BSCS · {block.year} · {translate('Second semester')}</small>
                     </span>
                   </label>
-                  {selection.blockId === block.id && <span className="registration-badge">Selected</span>}
+                  {selection.blockId === block.id && <span className="registration-badge">{translate('Selected')}</span>}
                 </div>
                 <div className="table-responsive">
                   <table className="table kaplag-table block-schedule-table">
                     <thead>
                       <tr>
-                        <th scope="col">Course</th>
-                        <th scope="col">Section</th>
-                        <th scope="col">Day(s)</th>
-                        <th scope="col">Time</th>
+                        <th scope="col">{translate('Course')}</th>
+                        <th scope="col">{translate('Section')}</th>
+                        <th scope="col">{translate('Day(s)')}</th>
+                        <th scope="col">{translate('Time')}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -240,33 +242,33 @@ const Registration = () => {
           </div>
           {availableBlocks.length === 0 && (
             <p className="registration-note" role="status">
-              No block schedules have been added for {student.year} yet.
+              {translate('No block schedules have been added for')} {student.year} {translate('yet.')}
             </p>
           )}
           <p className="registration-note">
-            The reference provided includes complete schedules for 1BSCS-A and 1BSCS-B. Other block schedules can be added when their details are available.
+            {translate('The reference provided includes complete schedules for 1BSCS-A and 1BSCS-B. Other block schedules can be added when their details are available.')}
           </p>
         </section>
 
         <section className="portal-card card-full" aria-labelledby="pe-title">
-          <h2 id="pe-title">2. Choose a PE section</h2>
+          <h2 id="pe-title">{translate('2. Choose a PE section')}</h2>
           <p>
-            PE means Physical Education. Only sections with available seats that do not overlap your selected block schedule are listed.
-            Activity names appear in parentheses to clarify the PE course codes.
+            {translate('PE means Physical Education. Only sections with available seats that do not overlap your selected block schedule are listed.')}
+            {translate(' Activity names appear in parentheses to clarify the PE course codes.')}
           </p>
           {!selectedBlock ? (
-            <p className="registration-note">Select a block above to see compatible PE sections.</p>
+            <p className="registration-note">{translate('Select a block above to see compatible PE sections.')}</p>
           ) : availablePESections.length > 0 ? (
             <div className="table-responsive">
               <table className="table kaplag-table registration-choice-table">
                 <thead>
                   <tr>
-                    <th scope="col">Choose</th>
-                    <th scope="col">Course</th>
-                    <th scope="col">Section</th>
-                    <th scope="col">Day(s)</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Seats left</th>
+                    <th scope="col">{translate('Choose')}</th>
+                    <th scope="col">{translate('Course')}</th>
+                    <th scope="col">{translate('Section')}</th>
+                    <th scope="col">{translate('Day(s)')}</th>
+                    <th scope="col">{translate('Time')}</th>
+                    <th scope="col">{translate('Seats left')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -295,18 +297,18 @@ const Registration = () => {
               </table>
             </div>
           ) : (
-            <p className="registration-note">No open PE sections fit this block schedule.</p>
+            <p className="registration-note">{translate('No open PE sections fit this block schedule.')}</p>
           )}
           {selectedBlock && (
-            <p className="registration-note">Seat counts are copied from the supplied schedule screenshot and are not live enrollment data.</p>
+            <p className="registration-note">{translate('Seat counts are copied from the supplied schedule screenshot and are not live enrollment data.')}</p>
           )}
         </section>
 
         <section className="portal-card card-full" aria-labelledby="nstp-title">
-          <h2 id="nstp-title">3. NSTP section</h2>
+          <h2 id="nstp-title">{translate('3. NSTP section')}</h2>
           {isFirstYear ? (
             <>
-              <p>NSTP registration is available to first-year students only.</p>
+              <p>{translate('NSTP registration is available to first-year students only.')}</p>
               <div className="nstp-option">
                 {nstpSections.map((offering) => (
                   <label className="nstp-option-row" key={offering.id}>
@@ -317,7 +319,7 @@ const Registration = () => {
                       checked={selection.nstpSectionId === offering.id}
                       onChange={() => updateSelection('nstpSectionId', offering.id)}
                     />
-                    <span><strong>{offering.course}</strong> · Section {offering.section}</span>
+                    <span><strong>{offering.course}</strong> · {translate('Section')} {offering.section}</span>
                     <span>{offering.dayLabel}</span>
                     <span>{offering.time}</span>
                   </label>
@@ -325,14 +327,14 @@ const Registration = () => {
               </div>
             </>
           ) : (
-            <p className="registration-note">NSTP schedule selection is only available to first-year students.</p>
+            <p className="registration-note">{translate('NSTP schedule selection is only available to first-year students.')}</p>
           )}
         </section>
 
         <section className="portal-card card-full registration-submit">
           {error && <p className="registration-error" role="alert">{error}</p>}
-          <p className="registration-note">Review your choices before the final confirmation.</p>
-          <button type="submit" className="btn btn-primary">Review and confirm</button>
+          <p className="registration-note">{translate('Review your choices before the final confirmation.')}</p>
+          <button type="submit" className="btn btn-primary">{translate('Review and confirm')}</button>
         </section>
       </form>
         </>
@@ -349,23 +351,23 @@ const Registration = () => {
           }}
         >
           <div className="registration-confirmation-content">
-            <p className="registration-summary-kicker">Final review</p>
-            <h2 id="registration-confirmation-title">Confirm your registration choices</h2>
-            <p>Check your selected sections before saving.</p>
+            <p className="registration-summary-kicker">{translate('Final review')}</p>
+            <h2 id="registration-confirmation-title">{translate('Confirm your registration choices')}</h2>
+            <p>{translate('Check your selected sections before saving.')}</p>
             <dl className="registration-confirmation-details">
-              <dt>Block section</dt>
+              <dt>{translate('Block section')}</dt>
               <dd>{selectedBlock.id}</dd>
-              <dt>PE section</dt>
-              <dd>{getPELabel(selectedPE.course)} · Section {selectedPE.section} · {selectedPE.dayLabel}, {selectedPE.time}</dd>
+              <dt>{translate('PE section')}</dt>
+              <dd>{getPELabel(selectedPE.course)} · {translate('Section')} {selectedPE.section} · {selectedPE.dayLabel}, {selectedPE.time}</dd>
               {isFirstYear && selectedNSTP && (
                 <>
-                  <dt>NSTP section</dt>
-                  <dd>{selectedNSTP.course} · Section {selectedNSTP.section} · {selectedNSTP.dayLabel}, {selectedNSTP.time}</dd>
+                  <dt>{translate('NSTP section')}</dt>
+                  <dd>{selectedNSTP.course} · {translate('Section')} {selectedNSTP.section} · {selectedNSTP.dayLabel}, {selectedNSTP.time}</dd>
                 </>
               )}
             </dl>
             <p className="registration-note">
-              Confirming saves these choices in this browser session only; it does not submit an official UP registration.
+              {translate('Confirming saves these choices in this browser session only; it does not submit an official UP registration.')}
             </p>
             <div className="registration-confirmation-actions">
               <button
@@ -373,10 +375,10 @@ const Registration = () => {
                 className="btn btn-outline-secondary"
                 onClick={() => setShowConfirmation(false)}
               >
-                Back to choices
+                {translate('Back to choices')}
               </button>
               <button type="button" className="btn btn-primary" onClick={confirmRegistration}>
-                Confirm and save
+                {translate('Confirm and save')}
               </button>
             </div>
           </div>
