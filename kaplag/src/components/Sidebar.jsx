@@ -5,7 +5,6 @@ const mainLinks = [
   ['Dashboard', '/dashboard'],
   ['Registration', '/registration'],
   ['Class Schedule', '/class-schedule'],
-  ['School Calendar', '/school-calendar'],
   ['Grades', '/grades'],
   ['Fees', '/fees'],
   ['Prospectus', '/prospectus'],

@@ -63,7 +63,7 @@ const Dashboard = () => {
       <section className="portal-card" aria-labelledby="attention-title">
         <h2 id="attention-title">{translate('Needs your attention')}</h2>
         <ul className="portal-list">
-          <li><strong>{translate('Tuition fee payment')}</strong> · Balance ₱1,060.00<br />Due 2026-09-15 · <span className="urgent">{translate('10 days left')}</span><br /><Link to="/fees">{translate('View fees')}</Link></li>
+          <li><strong>Tuition and fee transparency</strong><br />Review government-funded school fees and request student documents.<br /><Link to="/fees">{translate('View fees')}</Link></li>
           <li><strong>{translate('INC grade completion deadline')}</strong><br />2026-09-30</li>
           <li><strong>{translate('LOA application deadline')}</strong><br />2026-10-05</li>
         </ul>

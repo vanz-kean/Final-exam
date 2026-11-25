@@ -9,7 +9,7 @@ import Privacy from './pages/Privacy';
 import Grades from './pages/Grades';
 import Registration from './pages/Registration';
 import ClassSchedule from './pages/ClassSchedule';
-import SchoolCalendar from './pages/SchoolCalendar';
+import Fees from './pages/Fees';
 
 const ProtectedRoute = ({ user, children }) => {
   if (!user) {
@@ -46,9 +46,9 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="registration" element={<Registration />} />
           <Route path="class-schedule" element={<ClassSchedule />} />
-          <Route path="school-calendar" element={<SchoolCalendar />} />
+          <Route path="school-calendar" element={<Navigate to="/class-schedule" replace />} />
           <Route path="grades" element={<Grades />} />
-          <Route path="fees" element={<ComingSoon title="Fees" />} />
+          <Route path="fees" element={<Fees />} />
           <Route path="prospectus" element={<Prospectus />} />
           <Route path="announcements" element={<ComingSoon title="Announcements" />} />
           <Route path="up-mail" element={<ComingSoon title="UP Mail" />} />

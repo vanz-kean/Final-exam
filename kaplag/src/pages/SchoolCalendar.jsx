@@ -42,7 +42,7 @@ const SchoolCalendar = () => {
       <section className="portal-card card-full calendar-heading">
         <div>
           <p className="calendar-kicker">UP Mindanao · Proposed academic calendar</p>
-          <h1 tabIndex="-1">School Calendar</h1>
+          <h2>School Calendar</h2>
           <p>Academic Year 2026–2027 · Key academic dates, university events, and official holidays.</p>
         </div>
         <span className="calendar-event-count" aria-live="polite">

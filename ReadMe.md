@@ -10,7 +10,8 @@ The full list of rules and decisions lives in [`requirements.txt`](requirements.
 |------|-------|
 | Login, Dashboard, Privacy, Prospectus | Finished as plain HTML (reference design and content) |
 | React + Bootstrap version | In progress: Dashboard, Registration, Class Schedule, Grades, Privacy, and Prospectus |
-| Fees, Announcements, UPMail, StudentInformation, Evaluations, CampusFacility, CollegeFacility, StudentHousing | Not built yet (show a "Coming soon" screen) |
+| Announcements, UPMail, StudentInformation, Evaluations, CampusFacility, CollegeFacility, StudentHousing | Not built yet (show a "Coming soon" screen) |
+| Fees | Fee transparency and session-only school document requests |
 | School Calendar | Shows the proposed UP Mindanao AY 2026–2027 dates and official holidays |
 
 ## Tech stack
@@ -72,12 +73,14 @@ kaplag/
     │   ├── Registration.jsx
     │   ├── ClassSchedule.jsx
     │   ├── SchoolCalendar.jsx
+    │   ├── Fees.jsx
     │   ├── Prospectus.jsx
     │   ├── Privacy.jsx
     │   └── ...              The ten pages still to build
     └── data/
         ├── student.js       Name, student number, program, curriculum
         ├── registration.js  Available block, PE, and NSTP sections
+        ├── fees.js          Program durations, covered fees, and document options
         ├── academicCalendar.js  AY 2026–2027 dates and holidays
         ├── prospectus.js    Terms and courses (swap per student)
         └── sample.js        Schedule, fees, grades, announcements
@@ -95,7 +98,7 @@ kaplag/
 | `/dashboard` | Dashboard |
 | `/registration` | Registration |
 | `/class-schedule` | Class Schedule |
-| `/school-calendar` | School Calendar |
+| `/school-calendar` | Redirects to the Class Schedule page |
 | `/grades` | Grades |
 | `/fees` | Fees |
 | `/prospectus` | Prospectus |
@@ -144,9 +147,9 @@ Focus moves to the page `<h1>` after each route change.
 | Login | Student number, password, show/hide password, remember me, forgot password, sign in, demo account, privacy link | Form validation, Alert |
 | Dashboard | Greeting, today's classes with day tabs and "Up next", needs your attention (most urgent first), announcements, completion of degree | Nav tabs, Badge, Card, ProgressBar |
 | Class Schedule | Weekly timetable and list view built from saved registration sections | Responsive timetable |
-| School Calendar | Search and filter all AY 2026–2027 academic events and holidays by term | Filtered event list |
+| School Calendar | Class Schedule subtab with searchable AY 2026–2027 events and holidays | Filtered event list |
 | Grades | GWA on top, latest term first, INC and failing grades flagged | Table, Badge |
-| Fees | Amount due and due date at the top, breakdown, payment steps | Table |
+| Fees | Tuition duration status, government-funded fee categories, official-balance guidance, and document requests | Table, request form |
 | Prospectus | Student details and one table per term, with filter, search and live unit totals | Accordion, Table (responsive) |
 | Privacy | UP Privacy Notice for Students: summary, collapsible sections, DPO contacts, read-and-understood checkbox | Accordion, Toast |
 | Announcements | Newest first, filter by category, unread marked | Card, Badge |
@@ -220,6 +223,7 @@ Not allowed unless asked: server calls, real authentication, real student data i
 |-----------|------|
 | Student name, number, program, curriculum | `src/data/student.js` |
 | Registered class offerings | `src/data/registration.js` |
+| Program duration and fee/document options | `src/data/fees.js` |
 | Academic-year events and holidays | `src/data/academicCalendar.js` |
 | Courses and terms in the prospectus | `src/data/prospectus.js` |
 | Schedule, fees, grades, announcements | `src/data/sample.js` |
