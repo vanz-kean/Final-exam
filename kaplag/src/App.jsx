@@ -7,6 +7,7 @@ import ComingSoon from './pages/ComingSoon';
 import Prospectus from './pages/Prospectus';
 import Privacy from './pages/Privacy';
 import Grades from './pages/Grades';
+import Registration from './pages/Registration';
 
 const ProtectedRoute = ({ user, children }) => {
   if (!user) {
@@ -41,6 +42,7 @@ function App() {
         <Route element={<ProtectedRoute user={user}><Layout onLogout={handleLogout} /></ProtectedRoute>}>
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="registration" element={<Registration />} />
           <Route path="class-schedule" element={<ComingSoon title="Class Schedule" />} />
           <Route path="grades" element={<Grades />} />
           <Route path="fees" element={<ComingSoon title="Fees" />} />

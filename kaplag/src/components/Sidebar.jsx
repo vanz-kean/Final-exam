@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 const mainLinks = [
   ['Dashboard', '/dashboard'],
+  ['Registration', '/registration'],
   ['Class Schedule', '/class-schedule'],
   ['Grades', '/grades'],
   ['Fees', '/fees'],
