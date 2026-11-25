@@ -4,10 +4,41 @@ import { schedule, announcements } from '../data/sample';
 
 const Dashboard = () => (
   <>
-    <section className="portal-card greeting-card">
-      <h1 tabIndex="-1">Good morning, {student.name}</h1>
-      <p>{student.program} · {student.year} · {student.semester} {student.academicYear}</p>
+    <section className="portal-card card-full dashboard-hero">
+      <div>
+        <h1 tabIndex="-1">Dashboard</h1>
+        <p>Your term at a glance — classes, deadlines, and announcements.</p>
+      </div>
+      <button type="button" className="dashboard-notifications" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.7 21a2 2 0 0 1-3.4 0" />
+        </svg>
+        <span>Notifications</span>
+      </button>
     </section>
+
+    <section className="portal-card greeting-card card-full dashboard-welcome">
+      <div>
+        <p className="welcome-kicker">Welcome back</p>
+        <h2>{student.name}</h2>
+        <p>{student.program} · {student.year} · {student.semester} {student.academicYear}</p>
+      </div>
+      <div className="student-summary" aria-label={`Student number ${student.studentNumber}`}>
+        <span className="avatar" aria-hidden="true">VK</span>
+        <span>
+          <small>Student number</small>
+          <strong>{student.studentNumber}</strong>
+        </span>
+      </div>
+    </section>
+
+    <nav className="dashboard-quick-links" aria-label="Dashboard shortcuts">
+      <Link to="/class-schedule">Class Schedule</Link>
+      <Link to="/grades">Grades</Link>
+      <Link to="/fees">Fees</Link>
+      <Link to="/prospectus">Prospectus</Link>
+    </nav>
 
     <section className="portal-card" aria-labelledby="classes-title">
       <h2 id="classes-title">Today's classes</h2>

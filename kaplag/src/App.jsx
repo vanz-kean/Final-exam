@@ -38,7 +38,7 @@ function App() {
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
 
         {/* Protected routes - all require authentication */}
-        <Route element={<ProtectedRoute user={user}><Layout user={user} onLogout={handleLogout} /></ProtectedRoute>}>
+        <Route element={<ProtectedRoute user={user}><Layout onLogout={handleLogout} /></ProtectedRoute>}>
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="class-schedule" element={<ComingSoon title="Class Schedule" />} />

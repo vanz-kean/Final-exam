@@ -22,7 +22,7 @@ const moreLinks = [
 const Sidebar = ({ open, onClose, onLogout }) => (
   <>
     {open && <button type="button" className="sidebar-backdrop" onClick={onClose} aria-label="Close navigation" />}
-    <aside className={`portal-sidebar ${open ? 'open' : ''}`} aria-label="Main navigation">
+    <aside id="primary-navigation" className={`portal-sidebar ${open ? 'open' : ''}`} aria-label="Main navigation">
       <button type="button" className="sidebar-close" onClick={onClose} aria-label="Close navigation">×</button>
       <nav>
         {mainLinks.map(([label, to]) => (
