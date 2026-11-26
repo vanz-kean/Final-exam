@@ -1,16 +1,19 @@
-# React + Vite
+# KAPLAG · UP Mindanao Student Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Run locally
 
-Currently, two official plugins are available:
+```sh
+npm ci
+npm run dev
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## GitHub Pages
 
-## React Compiler
+The `Deploy KAPLAG to GitHub Pages` workflow builds and publishes the app to
+`https://banz-code.github.io/Test-Exam/` whenever a commit is pushed to `main`.
+The workflow can also be started manually from the repository's Actions tab.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+The workflow attempts to enable Pages automatically. If repository policy
+prevents that, set **Settings → Pages → Build and deployment → Source** to
+**GitHub Actions**. The build uses the `/Test-Exam/` base path and includes a
+404 fallback for client-side routes.

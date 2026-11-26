@@ -181,7 +181,10 @@ const Login = ({ onLogin }) => {
       </button>
 
       {/* Centered login card wrapper */}
-      <div className="login-page min-vh-100 d-flex align-items-center justify-content-center p-4">
+      <div
+        className="login-page min-vh-100 d-flex align-items-center justify-content-center p-4"
+        style={{ '--campus-background-image': `url("${import.meta.env.BASE_URL}img/UP-Min-Admin.png")` }}
+      >
         <div className="w-100" style={{ maxWidth: '440px' }}>
         {/* Login Card */}
         <Card className="login-card">
@@ -190,7 +193,7 @@ const Login = ({ onLogin }) => {
             {/* Header: Logo, System Name, Page Title */}
             <div className="text-center mb-4" role="banner">
               <img
-                src="/img/Logo.png"
+                src={`${import.meta.env.BASE_URL}img/Logo.png`}
                 alt="UP Mindanao logo"
                 className="login-logo mb-3"
               />
@@ -333,7 +336,7 @@ const Login = ({ onLogin }) => {
             {/* Footer */}
             <footer className="text-center mt-4 footer-text" role="contentinfo">
               <p>
-                <a href="/privacy" className="text-maroon">{translate('Privacy Notice')}</a>{' '}
+                <a href={`${import.meta.env.BASE_URL}privacy`} className="text-maroon">{translate('Privacy Notice')}</a>{' '}
                 · Data Privacy Act (RA 10173)
               </p>
               <p>{translate('© 2026 University of the Philippines Mindanao')} · Mintal, Davao City</p>

@@ -17,7 +17,7 @@ const Header = ({ onMenu, menuExpanded }) => {
         <span /><span /><span />
       </button>
       <Link to="/dashboard" className="brand" aria-label="KAPLAG dashboard">
-        <img src="/img/Logo.png" alt="" className="brand-logo" />
+        <img src={`${import.meta.env.BASE_URL}img/Logo.png`} alt="" className="brand-logo" />
         <span className="brand-text">
           <strong>{translate('KAPLAG')}</strong>
           <small>{translate('UP Mindanao · Student Portal')}</small>

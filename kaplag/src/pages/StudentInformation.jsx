@@ -650,7 +650,7 @@ const StudentInformation = () => {
             <div className="student-id-pair">
               <article className="up-id-card up-id-front" aria-label={translate('Student ID front')}>
                 <div className="up-id-masthead">
-                  <img className="up-id-seal" src="/img/Logo.png" alt="University of the Philippines Mindanao seal" />
+                  <img className="up-id-seal" src={`${import.meta.env.BASE_URL}img/Logo.png`} alt="University of the Philippines Mindanao seal" />
                   <div>
                     <strong>University of the Philippines</strong>
                     <b>Mindanao</b>

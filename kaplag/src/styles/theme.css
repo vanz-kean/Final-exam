@@ -302,7 +302,7 @@ a:hover {
 .login-page {
   background:
     linear-gradient(rgba(243, 244, 246, 0.7), rgba(243, 244, 246, 0.7)),
-    url("/img/UP-Min-Admin.png") center / cover no-repeat fixed;
+    var(--campus-background-image) center / cover no-repeat fixed;
 }
 
 .login-logo {
@@ -381,7 +381,7 @@ a:hover {
     "sidebar footer";
   background:
     linear-gradient(rgba(243, 244, 246, 0.7), rgba(243, 244, 246, 0.7)),
-    url("/img/UP-Min-Admin.png") center / cover no-repeat fixed;
+    var(--campus-background-image) center / cover no-repeat fixed;
 }
 
 .portal-shell.nav-collapsed {
@@ -2122,10 +2122,11 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
 
 .evaluations-heading {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
 .evaluations-heading h1 { margin: 0; }
@@ -2156,7 +2157,7 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
   padding: 8px;
   background: var(--bg);
   border-radius: 8px;
-  margin-bottom: 0;
+  margin-bottom: 16px;
 }
 
 .evaluation-tabs [role="tablist"] {
@@ -2201,21 +2202,24 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
 
 .evaluation-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 16px;
 }
 
 .evaluation-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 16px;
   cursor: pointer;
   transition: box-shadow 0.2s, border-color 0.2s, transform 0.1s;
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
 }
 
 .evaluation-card:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
   border-color: var(--maroon);
   transform: translateY(-2px);
 }
@@ -2229,12 +2233,29 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
   border-left: 4px solid var(--green);
 }
 
+.evaluation-card.not-used {
+  opacity: 0.6;
+  background: var(--bg);
+  cursor: default;
+}
+
+.evaluation-card.not-used:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border);
+}
+
+.evaluation-card.used {
+  opacity: 1;
+}
+
 .card-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .teacher-info, .service-info {
@@ -2242,6 +2263,7 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
   flex-direction: column;
   gap: 2px;
   min-width: 0;
+  flex: 1;
 }
 
 .service-info {
@@ -2303,16 +2325,18 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
 
 .criteria-preview {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
   margin-bottom: 12px;
   padding-top: 12px;
   border-top: 1px solid var(--border);
+  flex-shrink: 0;
 }
 
 .criterion-mini {
   display: grid;
   gap: 4px;
+  min-width: 0;
 }
 
 .criterion-label {
@@ -2321,14 +2345,18 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .star-row {
   display: flex;
-  gap: 1px;
-  font-size: .85rem;
+  gap: 2px;
+  font-size: .9rem;
   line-height: 1;
   color: var(--border);
+  flex-wrap: wrap;
 }
 
 .star-row .filled {
@@ -2340,8 +2368,10 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding-top: 8px;
+  padding-top: 10px;
   border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  margin-top: auto;
 }
 
 .avg-rating {
@@ -2371,6 +2401,136 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
   font-size: .75rem;
   color: var(--green);
   font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Service Evaluation Specific Styles */
+.service-eval-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.grievance-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--maroon-light);
+  border: 1px solid var(--maroon);
+  border-radius: 8px;
+  color: var(--maroon);
+  font-weight: 700;
+  font-size: .85rem;
+  text-decoration: none;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.grievance-link:hover {
+  background: var(--maroon);
+  color: var(--on-maroon);
+  text-decoration: none;
+}
+
+.grievance-link:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.grievance-link svg {
+  flex-shrink: 0;
+}
+
+.service-used-toggle {
+  margin: 8px 0 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--text);
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+  border-color: var(--green);
+  background: var(--green);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.checkbox-label input[type="checkbox"]:focus-visible + .checkbox-custom {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.eval-action-btn {
+  width: 100%;
+  padding: 10px 16px;
+  margin-top: 8px;
+  border: 1px solid var(--maroon);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--maroon);
+  font-weight: 700;
+  font-size: .85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.eval-action-btn:hover {
+  background: var(--maroon);
+  color: var(--on-maroon);
+}
+
+.eval-action-btn:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.status-badge.not-used {
+  background: var(--bg);
+  color: var(--muted);
+  border: 1px solid var(--border);
 }
 
 /* Modal */
@@ -2719,51 +2879,6 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
   outline-offset: 2px;
 }
 
-.eval-action-btn {
-  width: 100%;
-  padding: 10px 16px;
-  margin-top: 8px;
-  border: 1px solid var(--maroon);
-  border-radius: 6px;
-  background: var(--surface);
-  color: var(--maroon);
-  font-weight: 700;
-  font-size: .85rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.eval-action-btn:hover {
-  background: var(--maroon);
-  color: var(--on-maroon);
-}
-
-.eval-action-btn:focus-visible {
-  outline: 3px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-
-.status-badge.not-used {
-  background: var(--bg);
-  color: var(--muted);
-  border: 1px solid var(--border);
-}
-
-/* History - already has styles */
-
-/* Responsive for service evaluation */
-@media (max-width: 767px) {
-  .service-eval-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .grievance-link {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
 /* History */
 .evaluation-history {
   /* uses default portal-card styling */
@@ -2873,6 +2988,12 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
 }
 
 /* Responsive for evaluations */
+@media (max-width: 900px) {
+  .evaluation-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
 @media (max-width: 767px) {
   .evaluation-grid {
     grid-template-columns: 1fr;
@@ -2880,6 +3001,10 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
 
   .criteria-preview {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .evaluation-card {
+    min-height: auto;
   }
 
   .modal-content {
@@ -2911,6 +3036,16 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
   .evaluation-tabs [role="tab"] {
     padding: 8px 14px;
     font-size: .8rem;
+  }
+
+  .service-eval-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .grievance-link {
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -3116,3 +3251,343 @@ dialog.registration-confirmation::backdrop { background: rgba(26, 22, 23, .62); 
   .form5-total-table .form5-amount-payable td { background: #e8e8e8 !important; }
   .form5-disclaimer { color: #333 !important; font-size: 5.5px; }
   }
+
+/* Campus facilities locator */
+.campus-page {
+  grid-column: 1 / -1;
+  min-width: 0;
+  display: grid;
+  gap: 22px;
+}
+
+.campus-page__header,
+.campus-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.campus-page__header h1 {
+  margin: 4px 0 6px;
+  color: var(--maroon);
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+}
+
+.campus-page__header p,
+.campus-section-heading p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.campus-page__eyebrow {
+  color: var(--green);
+  font-size: .73rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.campus-page__official-link {
+  flex: 0 0 auto;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--maroon);
+  font-size: .9rem;
+  font-weight: 700;
+}
+
+.campus-safety {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border: 1px solid #e8c8a1;
+  border-left: 5px solid #d88a20;
+  border-radius: 8px;
+  background: #fffaf1;
+}
+
+.campus-safety__icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border-radius: 50%;
+  background: #f7e5c7;
+  color: #744507;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.campus-safety__copy { flex: 1; }
+.campus-safety__copy h2 {
+  margin: 0 0 3px;
+  color: #57380d;
+  font-size: 1rem;
+}
+.campus-safety__copy p {
+  margin: 0;
+  color: #594f40;
+  font-size: .88rem;
+}
+
+.campus-safety__phone {
+  display: grid;
+  gap: 2px;
+  white-space: nowrap;
+  color: var(--maroon);
+  text-align: right;
+}
+.campus-safety__phone span { font-size: .75rem; color: var(--muted); }
+.campus-safety__phone strong { font-size: 1rem; }
+
+.campus-map-panel,
+.campus-directory {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #e3e5e3;
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, .045);
+}
+
+.campus-section-heading { align-items: center; margin-bottom: 16px; }
+.campus-section-heading h2 {
+  margin: 0 0 4px;
+  color: var(--maroon);
+  font-size: 1.22rem;
+}
+.campus-section-heading p { font-size: .88rem; }
+
+.campus-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: min(100%, 300px);
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+}
+.campus-search > span:not(.visually-hidden) { font-size: 1.25rem; line-height: 1; }
+.campus-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: .9rem;
+}
+.campus-search:focus-within {
+  border-color: var(--maroon);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.campus-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+.campus-filters button {
+  min-height: 34px;
+  padding: 6px 11px;
+  border: 1px solid #dedfdf;
+  border-radius: 18px;
+  background: #fff;
+  color: #505050;
+  cursor: pointer;
+  font-size: .78rem;
+  font-weight: 650;
+}
+.campus-filters button:hover { border-color: var(--maroon); color: var(--maroon); }
+.campus-filters button.is-active {
+  border-color: var(--maroon);
+  background: var(--maroon);
+  color: #fff;
+}
+
+.campus-map {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #d7ddda;
+  border-radius: 8px;
+}
+.campus-map__canvas { height: 470px; width: 100%; background: #e8eee8; }
+.campus-map__credit {
+  position: absolute;
+  z-index: 500;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 11px;
+  border: 1px solid rgba(0, 0, 0, .08);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, .94);
+  color: #555;
+  font-size: .75rem;
+  pointer-events: none;
+}
+.campus-map__credit a { pointer-events: auto; font-weight: 700; }
+.campus-map-disclaimer {
+  margin: 11px 0 0;
+  color: var(--muted);
+  font-size: .79rem;
+  line-height: 1.5;
+}
+
+.campus-marker-shell { border: 0; background: transparent; }
+.campus-marker {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 3px solid #fff;
+  border-radius: 50% 50% 50% 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .38);
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 800;
+  transform: rotate(-45deg);
+}
+.campus-marker > span { transform: rotate(45deg); }
+.campus-marker--cluster { width: 43px; height: 43px; font-size: .68rem; }
+.campus-marker--cluster > span { white-space: nowrap; }
+.campus-marker--sports { background: #a94721; }
+.campus-marker--learning { background: #275b9b; }
+.campus-marker--welfare { background: #277648; }
+.campus-marker--admin { background: #744a8b; }
+.campus-marker.is-selected {
+  outline: 3px solid #f3aa2c;
+  outline-offset: 2px;
+}
+.leaflet-popup-content { min-width: 190px; }
+.leaflet-popup-content p { margin: 6px 0; color: var(--muted); font-size: .8rem; }
+
+.campus-facility-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.campus-facility-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #e1e3e1;
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+.campus-facility-card.is-selected {
+  border-color: var(--maroon);
+  box-shadow: 0 0 0 2px rgba(123, 17, 19, .12);
+}
+.campus-facility-card__image {
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  background: #ecefec;
+}
+.campus-facility-card__body { padding: 14px; }
+.campus-facility-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: .7rem;
+}
+.campus-category-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border-radius: 50%;
+}
+.campus-category-dot--sports { background: #a94721; }
+.campus-category-dot--learning { background: #275b9b; }
+.campus-category-dot--welfare { background: #277648; }
+.campus-category-dot--admin { background: #744a8b; }
+.campus-facility-card__number { margin-left: auto; font-weight: 700; }
+.campus-facility-card h3 {
+  margin: 9px 0 7px;
+  color: #292929;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+.campus-facility-card__body > p {
+  margin: 0;
+  color: #5e5e5e;
+  font-size: .83rem;
+  line-height: 1.5;
+}
+.campus-facility-card__body > .campus-facility-card__location {
+  min-height: 40px;
+  margin-top: 10px;
+  color: #3e654d;
+  font-size: .76rem;
+}
+.campus-facility-card__location > span { color: #277648; font-size: .65rem; }
+.campus-facility-card__body > .campus-facility-card__location--unknown { color: #80621f; }
+.campus-facility-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+  font-size: .8rem;
+  font-weight: 700;
+}
+.campus-facility-card__actions a,
+.campus-text-button { color: var(--maroon); }
+.campus-text-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+}
+.campus-text-button:hover,
+.campus-facility-card__actions a:hover { text-decoration: underline; }
+.campus-no-results {
+  margin: 0;
+  padding: 30px 12px;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  text-align: center;
+}
+.campus-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: .78rem;
+}
+.campus-sources > span:first-child { color: #555; font-weight: 700; }
+
+@media (max-width: 1100px) {
+  .campus-facility-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .campus-page { gap: 16px; }
+  .campus-page__header,
+  .campus-section-heading { align-items: flex-start; flex-direction: column; }
+  .campus-page__official-link { align-self: flex-start; }
+  .campus-safety { align-items: flex-start; flex-wrap: wrap; padding: 14px; }
+  .campus-safety__copy { flex: 1 1 calc(100% - 55px); }
+  .campus-safety__phone { margin-left: 52px; text-align: left; }
+  .campus-map-panel,
+  .campus-directory { padding: 15px; }
+  .campus-search { width: 100%; }
+  .campus-map__canvas { height: 390px; }
+  .campus-facility-grid { grid-template-columns: 1fr; }
+}

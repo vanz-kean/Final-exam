@@ -43,7 +43,10 @@ const Layout = ({ onLogout }) => {
   };
 
   return (
-    <div className={`portal-shell${sidebarCollapsed ? ' nav-collapsed' : ''}${sidebarOpen ? ' nav-open' : ''}`}>
+    <div
+      className={`portal-shell${sidebarCollapsed ? ' nav-collapsed' : ''}${sidebarOpen ? ' nav-open' : ''}`}
+      style={{ '--campus-background-image': `url("${import.meta.env.BASE_URL}img/UP-Min-Admin.png")` }}
+    >
       <Header
         onMenu={toggleNavigation}
         menuExpanded={isMobile ? sidebarOpen : !sidebarCollapsed}
