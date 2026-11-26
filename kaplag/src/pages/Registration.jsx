@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { student } from '../data/student';
 import { blockSchedules, nstpSections, peCourseNames, peSections } from '../data/registration';
+import { form5FeeItems, form5FeeTotals, form5UnavailableAmount } from '../data/fees';
 import { useTranslation } from '../context/TranslationContext.jsx';
 
 const getPELabel = (course) => (
@@ -13,8 +14,190 @@ const hasTimeConflict = (blockCourses, offering) => blockCourses.some((course) =
   && course.start < offering.end
 ));
 
+const Form5Field = ({ label, value, span = 1 }) => (
+  <div className={`form5-field form5-span-${span}`}>
+    <span>{label}</span>
+    <strong>{value}</strong>
+  </div>
+);
+
+const Form5Preview = ({ student, scheduleRows, selectedBlock, isRegistrationSaved, form5Status, translate, onClose }) => (
+  <section className="portal-card card-full registration-form5" aria-labelledby="registration-form5-title">
+    <div className="registration-form5-actions">
+      <span className="registration-status">{form5Status}</span>
+      <div className="registration-form5-action-buttons">
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          onClick={() => window.print()}
+          disabled={!isRegistrationSaved}
+        >
+          {translate('Print / Save as PDF')}
+        </button>
+        <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
+          {translate('Close preview')}
+        </button>
+      </div>
+    </div>
+    <article className="registration-form5-document">
+      <p className="form5-receipt-note">
+        {translate('Official receipt only when amount paid and O.R. number are recorded · Unofficial preview')}
+      </p>
+      <header className="form5-document-heading">
+        <span className="form5-seal" aria-hidden="true">UPM</span>
+        <div>
+          <p>{translate('University of the Philippines Mindanao')}</p>
+          <h2 id="registration-form5-title">{translate('UP Form 5 · Certificate of Registration')}</h2>
+        </div>
+        <strong>{student.semester} {student.academicYear}</strong>
+      </header>
+
+      <div className="form5-student-grid">
+        <Form5Field label={translate('Student no.')} value={student.studentNumber} />
+        <Form5Field label={translate('Name')} value={student.fullName} span={3} />
+        <Form5Field label={translate('SAIS ID')} value={translate('Not provided')} />
+        <Form5Field label={translate('College')} value={translate('Not provided')} />
+        <Form5Field label={translate('Program')} value={student.curriculum.split(' ')[0]} />
+        <Form5Field label={translate('Term & SY')} value={`${student.semester} ${student.academicYear}`} />
+
+        <Form5Field label={translate('Registration status')} value={isRegistrationSaved ? translate('Saved for this session') : translate('Draft')} />
+        <Form5Field label={translate('Academic career')} value={translate('Undergraduate')} />
+        <Form5Field label={translate('Year level')} value={student.year} />
+        <Form5Field label={translate('Block section')} value={selectedBlock?.id || translate('Not provided')} />
+        <Form5Field label={translate('Graduating this term?')} value={translate('Not provided')} span={2} />
+        <Form5Field label={translate('Employed')} value={translate('Not provided')} />
+        <Form5Field label={translate('Student housing')} value={translate('Not provided')} />
+
+        <Form5Field label={translate('Country of citizenship')} value={translate('Not provided')} />
+        <Form5Field label={translate('Religious preference')} value={translate('Not provided')} />
+        <Form5Field label={translate('Sex')} value={translate('Not provided')} />
+        <Form5Field label={translate('Civil status')} value={translate('Not provided')} />
+        <div className="form5-field form5-span-4">
+          <span>{translate('Payment details')}</span>
+          <div className="form5-payment-fields">
+            <Form5Field label={translate('O.R. no.')} value="—" />
+            <Form5Field label={translate('Transaction no.')} value="—" />
+            <Form5Field label={translate('Date')} value="—" />
+            <Form5Field label={translate('Amount paid')} value="—" />
+          </div>
+        </div>
+      </div>
+
+      <div className="form5-main-grid">
+        <div className="form5-academic-column">
+          <div className="form5-table-wrap">
+            <table className="form5-table form5-course-table">
+              <thead>
+                <tr>
+                  <th scope="col">{translate('Class code')}</th>
+                  <th scope="col">{translate('Subject')}</th>
+                  <th scope="col">{translate('Section')}</th>
+                  <th scope="col">{translate('Units')}</th>
+                  <th scope="col">{translate('Schedule & room')}</th>
+                  <th scope="col">{translate('Lab fee')}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {scheduleRows.length ? scheduleRows.map((course, index) => (
+                  <tr key={`${course.scheduleType}-${course.course}-${course.section}-${index}`}>
+                    <td>{translate('Not provided')}</td>
+                    <th scope="row">{course.course}</th>
+                    <td>{course.section}</td>
+                    <td>—</td>
+                    <td>{course.dayLabel} {course.time} / {translate('Room not provided')}</td>
+                    <td>—</td>
+                  </tr>
+                )) : (
+                  <tr>
+                    <td colSpan="6">{translate('Select a block to populate your Form 5 courses.')}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="form5-enrollment-grid">
+            <Form5Field label={translate('First time to enroll in UP?')} value={translate('Not provided')} />
+            <Form5Field label={translate('Target of first enrollment')} value={translate('Not provided')} />
+            <Form5Field label={translate('Officially enrolled')} value={translate('Not an official registration')} />
+            <Form5Field label={translate('Total number of units')} value={translate('Not available')} />
+            <Form5Field label={translate('Advisor')} value={translate('Not provided')} span={2} />
+            <Form5Field label={translate('Remaining semesters for tuition and OSF')} value={translate('Not calculated')} span={2} />
+            <Form5Field label={translate('Academic program')} value={student.curriculum} span={2} />
+            <Form5Field label={translate('Constituent unit / campus')} value="UP Mindanao" span={2} />
+            <Form5Field label={translate('Reason for underloading')} value={translate('Not provided')} span={4} />
+          </div>
+
+          <div className="form5-certification-grid">
+            <section>
+              <h3>{translate('Student pledge')}</h3>
+              <p>{translate('Review the information and course selections against the official University registration record.')}</p>
+              <div className="form5-signature-line">{translate('Student signature')} · {translate('Not recorded')}</div>
+            </section>
+            <section>
+              <h3>{translate('Student privacy notice')}</h3>
+              <p>{translate('Review the University privacy notice before submitting personal information. This preview does not record privacy consent.')}</p>
+              <div className="form5-signature-line">{translate('Acknowledgment')} · {translate('Not recorded')}</div>
+            </section>
+          </div>
+        </div>
+
+        <aside className="form5-fee-column" aria-label={translate('Form 5 fee breakdown')}>
+          <div className="form5-cashier-grid">
+            <Form5Field label={translate('Cashier register')} value="—" />
+            <Form5Field label={translate('Mode')} value="—" />
+            <Form5Field label={translate('Amount')} value="—" span={2} />
+          </div>
+          <table className="form5-table form5-fee-table">
+            <thead>
+              <tr>
+                <th scope="col">{translate('Item')}</th>
+                <th scope="col">{translate('Code')}</th>
+                <th scope="col">{translate('Amount')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {form5FeeItems.map((label) => (
+                <tr key={label}>
+                  <th scope="row">{translate(label)}</th>
+                  <td>—</td>
+                  <td>—</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="form5-fee-note">{translate('Fee amounts and codes')}: {translate(form5UnavailableAmount)}</p>
+          <table className="form5-table form5-total-table">
+            <tbody>
+              {form5FeeTotals.map((label) => (
+                <tr key={label} className={label === 'Amount payable' ? 'form5-amount-payable' : ''}>
+                  <th scope="row">{translate(label)}</th>
+                  <td>{translate('Not available')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="form5-approval-grid">
+            <Form5Field label={translate('Scholarship / privilege')} value={translate('Not provided')} span={2} />
+            <Form5Field label={translate('ST code / ND')} value="—" span={2} />
+            <Form5Field label={translate('Certified by')} value="—" span={2} />
+            <Form5Field label={translate('Advised by')} value="—" />
+            <Form5Field label={translate('Form 5 issued by')} value="—" />
+            <Form5Field label={translate('Assessed by')} value="—" span={2} />
+          </div>
+        </aside>
+      </div>
+      <p className="form5-disclaimer">
+        {translate('This prototype preview is not an official registration, receipt, fee assessment, or proof of payment. Current fees, codes, units, rooms, and balances require confirmation from the University Registrar or Accounting Office.')}
+      </p>
+    </article>
+  </section>
+);
+
 const Registration = () => {
   const confirmationDialogRef = useRef(null);
+  const form5DialogRef = useRef(null);
+  const form5TriggerRef = useRef(null);
   const summaryHeadingRef = useRef(null);
   const { translate } = useTranslation();
   const [selection, setSelection] = useState(() => {
@@ -25,6 +208,7 @@ const Registration = () => {
   });
   const [saved, setSaved] = useState(() => Boolean(sessionStorage.getItem('kaplag-registration')));
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showForm5Preview, setShowForm5Preview] = useState(false);
   const [error, setError] = useState('');
   const isFirstYear = student.year === 'Year 1';
   const availableBlocks = blockSchedules.filter((block) => block.year === student.year);
@@ -41,15 +225,22 @@ const Registration = () => {
   const isRegistrationSaved = Boolean(
     saved && selectedBlock && selectedPE && (!isFirstYear || selectedNSTP),
   );
-  const scheduleRows = selectedBlock && selectedPE
+  const scheduleRows = selectedBlock
     ? [
       ...selectedBlock.courses.map((course) => ({ ...course, scheduleType: 'Block course' })),
-      { ...selectedPE, course: getPELabel(selectedPE.course), scheduleType: 'PE selection' },
+      ...(selectedPE
+        ? [{ ...selectedPE, course: getPELabel(selectedPE.course), scheduleType: 'PE selection' }]
+        : []),
       ...(isFirstYear && selectedNSTP
         ? [{ ...selectedNSTP, scheduleType: 'NSTP selection' }]
         : []),
     ]
     : [];
+  const form5Status = isRegistrationSaved
+    ? translate('Saved registration')
+    : scheduleRows.length
+      ? translate('Draft preview · save registration to finalize')
+      : translate('Waiting for registration selections');
 
   useEffect(() => {
     if (!showConfirmation) return undefined;
@@ -60,6 +251,18 @@ const Registration = () => {
       if (dialog.open) dialog.close();
     };
   }, [showConfirmation]);
+
+  useEffect(() => {
+    if (!showForm5Preview) return undefined;
+    const dialog = form5DialogRef.current;
+    const trigger = form5TriggerRef.current;
+    if (!dialog) return undefined;
+    if (!dialog.open) dialog.showModal();
+    return () => {
+      if (dialog.open) dialog.close();
+      trigger?.focus();
+    };
+  }, [showForm5Preview]);
 
   useEffect(() => {
     if (isRegistrationSaved) summaryHeadingRef.current?.focus();
@@ -110,12 +313,22 @@ const Registration = () => {
           <section className="portal-card card-full registration-summary-heading">
             <div>
               <p className="registration-summary-kicker">{translate('Registration complete')}</p>
-              <h1 ref={summaryHeadingRef} tabIndex="-1">{translate('Registration summary')}</h1>
+              <h1 ref={summaryHeadingRef} tabIndex="-1">{translate('Registration')}</h1>
               <p className="registration-term">
                 {student.program} · {student.year} · {student.semester} {student.academicYear}
               </p>
             </div>
-            <span className="registration-status">{translate('Saved for this session')}</span>
+            <div className="registration-heading-actions">
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                ref={form5TriggerRef}
+                onClick={() => setShowForm5Preview(true)}
+              >
+                {translate('Preview Form 5')}
+              </button>
+              <span className="registration-status">{translate('Saved for this session')}</span>
+            </div>
           </section>
 
           <section className="portal-card card-full registration-summary-card">
@@ -180,11 +393,23 @@ const Registration = () => {
       ) : (
         <>
           <section className="portal-card card-full registration-heading">
-            <h1 tabIndex="-1">{translate('Registration')}</h1>
-            <p>{translate('Choose your block, then select PE and NSTP sections that fit your schedule.')}</p>
-            <p className="registration-term">
-              {student.program} · {student.year} · {student.semester} {student.academicYear}
-            </p>
+            <div className="registration-heading-layout">
+              <div>
+                <h1 tabIndex="-1">{translate('Registration')}</h1>
+                <p>{translate('Choose your block, then select PE and NSTP sections that fit your schedule.')}</p>
+                <p className="registration-term">
+                  {student.program} · {student.year} · {student.semester} {student.academicYear}
+                </p>
+              </div>
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                ref={form5TriggerRef}
+                onClick={() => setShowForm5Preview(true)}
+              >
+                {translate('Preview Form 5')}
+              </button>
+            </div>
           </section>
 
       <form className="registration-form" onSubmit={reviewRegistration}>
@@ -338,6 +563,28 @@ const Registration = () => {
         </section>
       </form>
         </>
+      )}
+
+      {showForm5Preview && (
+        <dialog
+          ref={form5DialogRef}
+          className="registration-form5-dialog"
+          aria-labelledby="registration-form5-title"
+          onCancel={(event) => {
+            event.preventDefault();
+            setShowForm5Preview(false);
+          }}
+        >
+          <Form5Preview
+            student={student}
+            scheduleRows={scheduleRows}
+            selectedBlock={selectedBlock}
+            isRegistrationSaved={isRegistrationSaved}
+            form5Status={form5Status}
+            translate={translate}
+            onClose={() => setShowForm5Preview(false)}
+          />
+        </dialog>
       )}
 
       {showConfirmation && selectedBlock && selectedPE && (

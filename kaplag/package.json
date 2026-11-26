@@ -12,6 +12,8 @@
   "dependencies": {
     "bootstrap": "^5.3.9",
     "firebase": "^13.4.0",
+    "jsbarcode": "^3.12.3",
+    "qrcode": "^1.5.4",
     "react": "^19.3.1",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.3.1",

@@ -9,7 +9,7 @@ const TabBar = ({ onMore }) => {
       <NavLink to="/dashboard">{translate('Dashboard')}</NavLink>
       <NavLink to="/class-schedule">{translate('Class Schedule')}</NavLink>
       <NavLink to="/grades">{translate('Grades')}</NavLink>
-      <NavLink to="/fees">{translate('Fees')}</NavLink>
+      <NavLink to="/fees">{translate('Fees & Documents')}</NavLink>
       <button type="button" onClick={onMore}>{translate('More')}</button>
     </nav>
   );

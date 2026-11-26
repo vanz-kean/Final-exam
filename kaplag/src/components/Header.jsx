@@ -28,7 +28,7 @@ const Header = ({ onMenu, menuExpanded }) => {
           type="button"
           className="lang-toggle"
           onClick={toggleLanguage}
-          aria-label={language === 'en' ? 'Switch to Tagalog' : 'Switch to English'}
+          aria-label={language === 'en' ? translate('Switch to Tagalog') : translate('Switch to English')}
           title={language === 'en' ? 'Tagalog' : 'English'}
           style={{
             display: 'inline-flex',
@@ -56,7 +56,12 @@ const Header = ({ onMenu, menuExpanded }) => {
             e.currentTarget.style.borderColor = 'rgba(241, 233, 230, 0.35)';
           }}
         >
-          <span style={{ fontSize: '1rem' }}>{language === 'en' ? '🇵🇭' : '🇺🇸'}</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0 }}>
+            <path d="M21 12a9 9 0 0 1-9 9c-2.52 0-4.93-.69-6.74-1.88L2 12l6.26-8.12C6.07 2.69 8.48 2 11 2a9 9 0 0 1 9 9z" />
+            <path d="M21 12a9 9 0 0 1-9 9" />
+            <path d="M21 12a9 9 0 0 1-9-9" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
           <span>{language === 'en' ? 'TL' : 'EN'}</span>
         </button>
       </div>

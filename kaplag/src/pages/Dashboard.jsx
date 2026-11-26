@@ -1,10 +1,19 @@
 import { Link } from 'react-router-dom';
 import { student } from '../data/student';
-import { schedule, announcements } from '../data/sample';
+import { schedule } from '../data/sample';
+import { announcements, getRecentAnnouncements } from '../data/announcements.js';
 import { useTranslation } from '../context/TranslationContext.jsx';
 
 const Dashboard = () => {
   const { translate } = useTranslation();
+  const recentAnnouncements = getRecentAnnouncements(5);
+
+  const categoryConfig = {
+    // Colors updated for WCAG AA contrast (4.5:1 minimum)
+    urgent: { label: translate('URGENT'), color: '#b3261e', icon: '🚨', bg: '#fef2f2', textColor: '#7f1d1d' },
+    action: { label: translate('ACTION REQUIRED'), color: '#8a5b00', icon: '⚠️', bg: '#fefce8', textColor: '#713f00' },
+    info: { label: translate('ANNOUNCEMENT'), color: '#014421', icon: '📢', bg: '#e8f5ed', textColor: '#013318' },
+  };
 
   return (
     <>
@@ -40,7 +49,7 @@ const Dashboard = () => {
       <nav className="dashboard-quick-links" aria-label={translate('Dashboard shortcuts')}>
         <Link to="/class-schedule">{translate('Class Schedule')}</Link>
         <Link to="/grades">{translate('Grades')}</Link>
-        <Link to="/fees">{translate('Fees')}</Link>
+        <Link to="/fees">{translate('Fees & Documents')}</Link>
         <Link to="/prospectus">{translate('Prospectus')}</Link>
       </nav>
 
@@ -63,7 +72,7 @@ const Dashboard = () => {
       <section className="portal-card" aria-labelledby="attention-title">
         <h2 id="attention-title">{translate('Needs your attention')}</h2>
         <ul className="portal-list">
-          <li><strong>Tuition and fee transparency</strong><br />Review government-funded school fees and request student documents.<br /><Link to="/fees">{translate('View fees')}</Link></li>
+          <li><strong>Tuition and fee transparency</strong><br />Review government-funded school fees and request student documents.<br /><Link to="/fees">{translate('View fees & documents')}</Link></li>
           <li><strong>{translate('INC grade completion deadline')}</strong><br />2026-09-30</li>
           <li><strong>{translate('LOA application deadline')}</strong><br />2026-10-05</li>
         </ul>
@@ -71,14 +80,40 @@ const Dashboard = () => {
 
       <section className="portal-card announcements-card" aria-labelledby="announcements-title">
         <h2 id="announcements-title">{translate('Announcements')} ({announcements.length})</h2>
-        {announcements.map((item) => (
-          <article className="announcement-card" key={item.title}>
-            <p className="category-date">{item.category} · <time dateTime={item.date}>{item.date}</time></p>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-            <p className="office">{item.office}</p>
-          </article>
-        ))}
+        {recentAnnouncements.map((item) => {
+          const config = categoryConfig[item.category];
+          const cardStyle = { borderLeftColor: config.color, background: config.bg, color: config.textColor };
+          const badgeStyle = { background: config.color, color: '#fff' };
+          const buttonStyle = { background: config.color, color: '#fff' };
+          const expiryStyle = { color: config.color };
+          return (
+            <article key={item.id} className={`announcement-card ${item.category}`} style={cardStyle}>
+              <div className="announcement-header">
+                <span className="announcement-badge" style={badgeStyle}>
+                  {config.icon} {config.label}
+                </span>
+                <time className="announcement-date" dateTime={item.date} style={{ color: config.textColor }}>
+                  {new Date(item.date).toLocaleDateString('en-PH', { month: 'short', day: 'numeric' })}
+                </time>
+              </div>
+              <h3 style={{ color: config.textColor }}>{item.title}</h3>
+              <p style={{ color: config.textColor }}>{item.text}</p>
+              <div className="announcement-footer">
+                <span className="announcement-office" style={{ color: config.textColor }}>{item.office}</span>
+                {item.actionRequired && item.actionLink && (
+                  <Link to={item.actionLink} className="btn btn-sm announcement-action-btn" style={buttonStyle}>
+                    {item.actionText || translate('View Details')}
+                  </Link>
+                )}
+              </div>
+              {item.expiryDate && (
+                <div className="announcement-expiry" style={expiryStyle}>
+                  ⏰ {translate('Deadline')}: {new Date(item.expiryDate).toLocaleDateString('en-PH', { month: 'short', day: 'numeric' })}
+                </div>
+              )}
+            </article>
+          );
+        })}
         <Link className="card-link" to="/announcements">{translate('View all announcements')}</Link>
       </section>
 

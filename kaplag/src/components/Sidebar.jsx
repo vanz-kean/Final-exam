@@ -6,10 +6,9 @@ const mainLinks = [
   ['Registration', '/registration'],
   ['Class Schedule', '/class-schedule'],
   ['Grades', '/grades'],
-  ['Fees', '/fees'],
+  ['Fees & Documents', '/fees'],
   ['Prospectus', '/prospectus'],
   ['Announcements', '/announcements'],
-  ['UP Mail', '/up-mail'],
   ['Student Information', '/student-information'],
 ];
 

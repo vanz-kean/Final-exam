@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { Card, Form, Button, Alert } from 'react-bootstrap';
 import { useTranslation } from '../context/TranslationContext.jsx';
 
 // Demo account credentials from original Login.html
@@ -14,7 +14,7 @@ const UP_MAIL_DOMAINS = ['@up.edu.ph', '@upmindanao.edu.ph'];
 
 const Login = ({ onLogin }) => {
   const navigate = useNavigate();
-  const { translate } = useTranslation();
+  const { translate, language, toggleLanguage } = useTranslation();
   const [studentNumber, setStudentNumber] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -130,27 +130,76 @@ const Login = ({ onLogin }) => {
   }, [googleLoaded, handleGoogleResponse]);
 
   return (
-    <div className="login-page min-vh-100 d-flex align-items-center justify-content-center p-4">
-      <Container className="w-100">
-        <Row className="justify-content-center">
-          <Col xs={12} sm={10} md={8} lg={6} xl={5}>
-            {/* Login Card */}
-            <Card className="login-card">
-              <Card.Body className="p-4 p-md-5">
+    <Fragment>
+      {/* Language toggle - fixed to top right of viewport */}
+      <button
+        type="button"
+        className="lang-toggle"
+        onClick={toggleLanguage}
+        aria-label={language === 'en' ? translate('Switch to Tagalog') : translate('Switch to English')}
+        title={language === 'en' ? 'Tagalog' : 'English'}
+        style={{
+          position: 'fixed',
+          top: '24px',
+          right: '24px',
+          zIndex: 100,
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '6px',
+          minHeight: '40px',
+          padding: '0 12px',
+          background: 'rgba(255, 255, 255, 0.95)',
+          border: '1px solid rgba(123, 17, 19, 0.35)',
+          borderRadius: '4px',
+          color: '#7b1113',
+          fontSize: '0.85rem',
+          fontWeight: 600,
+          cursor: 'pointer',
+          userSelect: 'none',
+          transition: 'background 0.2s, border-color 0.2s, box-shadow 0.2s',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = '#fff';
+          e.currentTarget.style.borderColor = '#7b1113';
+          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
+          e.currentTarget.style.borderColor = 'rgba(123, 17, 19, 0.35)';
+          e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+        }}
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink: 0 }}>
+          <path d="M21 12a9 9 0 0 1-9 9c-2.52 0-4.93-.69-6.74-1.88L2 12l6.26-8.12C6.07 2.69 8.48 2 11 2a9 9 0 0 1 9 9z" />
+          <path d="M21 12a9 9 0 0 1-9 9" />
+          <path d="M21 12a9 9 0 0 1-9-9" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+        <span>{language === 'en' ? 'TL' : 'EN'}</span>
+      </button>
 
-                {/* Header: Logo, System Name, Page Title */}
-                <div className="text-center mb-4" role="banner">
-                  <img
-                    src="/img/Logo.png"
-                    alt="UP Mindanao logo"
-                    className="login-logo mb-3"
-                  />
-                  <h1 className="h3 fw-bold text-maroon mb-1">{translate('KAPLAG')}</h1>
-                  <p className="text-muted-custom mb-2">{translate('University of the Philippines Mindanao')}</p>
-                  <hr className="login-divider my-3" aria-hidden="true" />
-                  <h2 id="signin-title" className="h5 fw-semibold">{translate('Student Portal')}</h2>
-                  <p className="text-muted-custom small">{translate('Sign in to access the student directory')}</p>
-                </div>
+      {/* Centered login card wrapper */}
+      <div className="login-page min-vh-100 d-flex align-items-center justify-content-center p-4">
+        <div className="w-100" style={{ maxWidth: '440px' }}>
+        {/* Login Card */}
+        <Card className="login-card">
+          <Card.Body className="p-4 p-md-5">
+
+            {/* Header: Logo, System Name, Page Title */}
+            <div className="text-center mb-4" role="banner">
+              <img
+                src="/img/Logo.png"
+                alt="UP Mindanao logo"
+                className="login-logo mb-3"
+              />
+              <h1 className="h3 fw-bold text-maroon mb-1">{translate('KAPLAG')}</h1>
+              <p className="text-muted-custom mb-2">{translate('University of the Philippines Mindanao')}</p>
+              <hr className="login-divider my-3" aria-hidden="true" />
+              <h2 id="signin-title" className="h5 fw-semibold">{translate('Student Portal')}</h2>
+              <p className="text-muted-custom small">{translate('Sign in to access the student directory')}</p>
+            </div>
 
                 {/* Error Alert */}
                 {error && (
@@ -291,10 +340,9 @@ const Login = ({ onLogin }) => {
               <p className="fst-italic small">"Transforming lifelong learners into responsive leaders"</p>
             </footer>
 
-          </Col>
-        </Row>
-      </Container>
-    </div>
+        </div>
+      </div>
+    </Fragment>
   );
 };
 

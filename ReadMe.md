@@ -83,7 +83,7 @@ kaplag/
         ├── fees.js          Program durations, covered fees, and document options
         ├── academicCalendar.js  AY 2026–2027 dates and holidays
         ├── prospectus.js    Terms and courses (swap per student)
-        └── sample.js        Schedule, fees, grades, announcements
+        └── sample.js        Schedule, grades, announcements
 ```
 
 **Naming rule:** one component per file, PascalCase names (`Dashboard.jsx`, `TabBar.jsx`). Folder names are case-sensitive on some servers, so keep them exactly as shown.
@@ -146,10 +146,11 @@ Focus moves to the page `<h1>` after each route change.
 |------|---------------|------------------|
 | Login | Student number, password, show/hide password, remember me, forgot password, sign in, demo account, privacy link | Form validation, Alert |
 | Dashboard | Greeting, today's classes with day tabs and "Up next", needs your attention (most urgent first), announcements, completion of degree | Nav tabs, Badge, Card, ProgressBar |
+| Registration | Block, PE, and first-year NSTP choices; a landscape Form 5-style preview updates from selections and can be printed after confirmation | Responsive block cards, conflict filtering, printable Form 5 layout |
 | Class Schedule | Weekly timetable and list view built from saved registration sections | Responsive timetable |
 | School Calendar | Class Schedule subtab with searchable AY 2026–2027 events and holidays | Filtered event list |
 | Grades | GWA on top, latest term first, INC and failing grades flagged | Table, Badge |
-| Fees | Tuition duration status, government-funded fee categories, official-balance guidance, and document requests | Table, request form |
+| Fees & Documents | Tuition duration status, Form 5 fee items and subsidy totals, statement guidance, and document requests | Fee ledger, request form |
 | Prospectus | Student details and one table per term, with filter, search and live unit totals | Accordion, Table (responsive) |
 | Privacy | UP Privacy Notice for Students: summary, collapsible sections, DPO contacts, read-and-understood checkbox | Accordion, Toast |
 | Announcements | Newest first, filter by category, unread marked | Card, Badge |
@@ -226,7 +227,7 @@ Not allowed unless asked: server calls, real authentication, real student data i
 | Program duration and fee/document options | `src/data/fees.js` |
 | Academic-year events and holidays | `src/data/academicCalendar.js` |
 | Courses and terms in the prospectus | `src/data/prospectus.js` |
-| Schedule, fees, grades, announcements | `src/data/sample.js` |
+| Schedule, grades, announcements | `src/data/sample.js` |
 | Brand colors and Bootstrap look | Variables in `src/styles/theme.css` |
 | Sidebar links | `src/components/Sidebar.jsx` |
 | Tab bar items | `src/components/TabBar.jsx` |

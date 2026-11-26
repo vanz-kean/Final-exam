@@ -10,6 +10,9 @@ import Grades from './pages/Grades';
 import Registration from './pages/Registration';
 import ClassSchedule from './pages/ClassSchedule';
 import Fees from './pages/Fees';
+import Announcements from './pages/Announcements';
+import StudentInformation from './pages/StudentInformation';
+import Evaluations from './pages/Evaluations';
 
 const ProtectedRoute = ({ user, children }) => {
   if (!user) {
@@ -50,10 +53,10 @@ function App() {
           <Route path="grades" element={<Grades />} />
           <Route path="fees" element={<Fees />} />
           <Route path="prospectus" element={<Prospectus />} />
-          <Route path="announcements" element={<ComingSoon title="Announcements" />} />
-          <Route path="up-mail" element={<ComingSoon title="UP Mail" />} />
-          <Route path="student-information" element={<ComingSoon title="Student Information" />} />
-          <Route path="evaluations" element={<ComingSoon title="Evaluations" />} />
+          <Route path="announcements" element={<Announcements />} />
+          <Route path="up-mail" element={<Navigate to="/student-information" replace />} />
+          <Route path="student-information" element={<StudentInformation />} />
+          <Route path="evaluations" element={<Evaluations />} />
           <Route path="campus-facility" element={<ComingSoon title="Campus Facility & Safety" />} />
           <Route path="college-facility" element={<ComingSoon title="College Facility & Safety" />} />
           <Route path="student-housing" element={<ComingSoon title="Student Housing" />} />
